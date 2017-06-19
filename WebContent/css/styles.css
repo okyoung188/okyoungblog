@@ -45,7 +45,7 @@ header nav ul li a:hover, #nav_current { color: #fff; background: rgba(20, 20, 2
 .details li { line-height: 26px; display: inline; font-size: 11px; margin-right: 10px; }
 .details li a { color: #3F3E3C }
 .details li a:hover { color: #933 }
-.icon-time, .likes, .comments { background: url(../images/icons.png) no-repeat }
+.icon-time, .likes, .comments { background: url(/resource/image/images/icons.png) no-repeat }
 .icon-time { background-position: 0 -208px; padding: 0 0 0 18px; }
 .likes, .comments { float: right; padding: 0 0 0 14px; }
 .likes { background-position: 0 -240px; }
@@ -55,14 +55,14 @@ aside { width: 30%; float: right; margin: 20px 0; }
 aside h2, footer h2 { font-size: 16px; margin-bottom: 10px; text-shadow: #000 1px 1px 1px; color: #ccc }
 aside div {width:87%; margin-left:5%;box-shadow: 0px 1px 0px rgba(255,255,255,.1);border:1px solid black; border-radius: 6px; padding: 15px;margin-bottom: 20px; overflow: hidden; background:rgba(255,255,255,1)}
 /* card */
-.card { box-shadow: 0px 1px 0px rgba(255,255,255,.1); border-radius: 6px; background: url(../images/quote-bg.png) no-repeat top right rgba(255,255,255,1); height: 270px; overflow: hidden }
+.card { box-shadow: 0px 1px 0px rgba(255,255,255,.1); border-radius: 6px; background: url(/resource/image/images/quote-bg.png) no-repeat top right rgba(255,255,255,1); height: 270px; overflow: hidden }
 .card h1 { padding: 10px }
 .card p:first-child { padding: 40px 0 0 40px } /* 结构性伪类选择符 选择第一个p标签，并且设置上、左距离是40px*/
 .card p { padding: 0 0 0 40px; line-height: 28px; -webkit-animation: animations2 5s ease-in-out 5s; -moz-animation: animations2 5s ease-in-out 5s; -o-animation: animations2 5s ease-in-out 5s; -ms-animation: animations2 5s ease-in-out 5s; animation: animations2 5s ease-in-out 5s; }
 .linkmore { margin: 15px 0 0 15px }
 .linkmore li a { height: 50px; width: 50px; display: block; overflow: hidden;border:1px solid black; box-shadow: 0px 1px 0px rgba(255,255,255,.1); border-radius: 50%; float: left; margin: 0 6px; }
 .linkmore li a:hover { opacity: 0.5; -webkit-transform: rotate(30deg); -ms-transform: rotate(30deg); -moz-transform: rotate(30deg); -o-transform: rotate(30deg); transform: rotate(30deg); }
-.talk, .address, .email, .photos, .heart { background: url(../images/icons.png) no-repeat; }
+.talk, .address, .email, .photos, .heart { background: url(/resource/image/images/icons.png) no-repeat; }
 .talk { background-position: 13px 18px }
 .address { background-position: 12px -22px }
 .email { background-position: 12px -60px }
@@ -82,7 +82,7 @@ aside div {width:87%; margin-left:5%;box-shadow: 0px 1px 0px rgba(255,255,255,.1
 .toppic li img { width: 80px; float: left; margin-right: 10px; }
 .toppic ul li:nth-child(2) { margin: 15px 0; }
 .toppic ul li a { display: block; width: 100%; clear: both; overflow: hidden }
-.toppic li p { color: #B5783E; padding-left: 110px; margin-top: 5px; background: url(../images/icons.png) no-repeat }
+.toppic li p { color: #B5783E; padding-left: 110px; margin-top: 5px; background: url(/resource/image/images/icons.png) no-repeat }
 .toppic li:first-child p { background-position: 90px -263px; }
 .toppic li:nth-child(2) p { background-position: 90px -283px; }
 .toppic li:last-child p { background-position: 90px -301px; }
@@ -94,13 +94,13 @@ aside div {width:87%; margin-left:5%;box-shadow: 0px 1px 0px rgba(255,255,255,.1
 .clicks li a:hover { text-decoration: underline }
 /* search */
 .searchform { overflow: hidden; padding: 10px; }
-.searchform input { background: rgba(0, 0, 0, 0.25) url(../images/icons.png) no-repeat 3px -318px; border: 1px solid #111; width: 220px; line-height: 30px; color: #b9b9b9; padding-left: 30px; }
+.searchform input { background: rgba(0, 0, 0, 0.25) url(/resource/image/images/icons.png) no-repeat 3px -318px; border: 1px solid #111; width: 220px; line-height: 30px; color: #b9b9b9; padding-left: 30px; }
 /* music */
 .viny dl dd { color: #b9b9b9; line-height: 24px; }
 .art { background: url(../images/vinyl.png) no-repeat left; width: 130px; float: left; background-size: 120px; }
 .viny .art img { width: 90px; height: 90px; margin-left: 11px }
 .viny dd span { width: 12px; height: 24px; margin-right: 7px; float: left; display: block; }
-.icon-song span, .icon-artist span, .icon-album span, .icon-like span { background: url(../images/icons.png) no-repeat }
+.icon-song span, .icon-artist span, .icon-album span, .icon-like span { background: url(/resource/image/images/icons.png) no-repeat }
 .icon-song span { background-position: -33px -344px }
 .icon-artist span { background-position: -16px -344px }
 .icon-album span { background-position: 0 -344px }
