@@ -36,6 +36,9 @@
 	    <action name="main">
 	        <result name="success">/WEB-INF/jsp/main.jsp</result>
 	    </action>
+	    <action name="">
+	        	    
+	    </action>
 	</package>
 
 </struts>
