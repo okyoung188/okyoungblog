@@ -26,7 +26,7 @@ public class Article {
 	private String content;
 	private String indeximg;
 	private String editor;
-	private ArticleType type;
+	private ArticleType articletype;
 	private String keyword;
 	private Date time;
 	private Integer count;
@@ -83,11 +83,11 @@ public class Article {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "type")
 	public ArticleType getType() {
-		return type;
+		return articletype;
 	}
 
 	public void setType(ArticleType type) {
-		this.type = type;
+		this.articletype = type;
 	}
 
 	@Column(name = "keyword")
