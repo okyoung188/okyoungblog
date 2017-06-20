@@ -1,4 +1,4 @@
-<%@page contentType="text/html; charset=utf-8" language="java"%>
+<%@page contentType="text/html; charset=utf-8" pageEncoding="utf-8" language="java"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <!doctype html>
 <html>

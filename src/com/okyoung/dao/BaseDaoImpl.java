@@ -1,4 +1,4 @@
-package com.okyoung.dao.impl;
+package com.okyoung.dao;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,9 +10,6 @@ import org.hibernate.SessionFactory;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-
-import com.okyoung.dao.BaseDao;
 
 @Repository("baseDao")
 public class BaseDaoImpl<T> implements BaseDao<T> {
