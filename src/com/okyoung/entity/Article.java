@@ -80,14 +80,14 @@ public class Article {
 		this.editor = editor;
 	}
 
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name="type")
-	public ArticleType getArticletype() {
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "type")
+	public ArticleType getType() {
 		return articletype;
 	}
 
-	public void setArticletype(ArticleType articletype) {
-		this.articletype = articletype;
+	public void setType(ArticleType type) {
+		this.articletype = type;
 	}
 
 	@Column(name = "keyword")

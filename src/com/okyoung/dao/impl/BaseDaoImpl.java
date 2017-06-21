@@ -11,9 +11,6 @@ import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
-import com.okyoung.dao.BaseDao;
-
 @Repository("baseDao")
 public class BaseDaoImpl<T> implements BaseDao<T> {
 
