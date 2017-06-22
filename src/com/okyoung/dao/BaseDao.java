@@ -21,14 +21,22 @@ public interface BaseDao<T> {
 	public T get(String hql, Map<String, Object> params);
 	
 	/**
-	 * 查找数据
+	 * 查找多条数据
 	 * @param hql
 	 * @return
 	 */
 	public List<T> find(String hql);
 	
 	/**
-	 * 翻页查找
+	 * 根据参数查找多条数据
+	 * @param hql
+	 * @param params
+	 * @return
+	 */
+	public List<T> find(String hql, Map<String, Object> params);
+	
+	/**
+	 * 翻页查找多条数据
 	 * @param hql
 	 * @param pageNum
 	 * @param pageSize
@@ -36,12 +44,29 @@ public interface BaseDao<T> {
 	 */
 	public List<T> find(String hql, int pageNum, int pageSize);
 	
-	public List<T> find(String hql, Map<String, Object> params);
-	
+    /**
+     * 根据参数翻页查找多条数据	
+     * @param hql
+     * @param params
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
 	public List<T> find(String hql, Map<String, Object> params, int pageNum, int pageSize);
 	
+	/**
+	 * 聚集sum
+	 * @param hql
+	 * @return
+	 */
 	public Long count(String hql);
 	
+	/**
+	 * 根据参数聚集
+	 * @param hql
+	 * @param params
+	 * @return
+	 */
 	public Long count(String hql, Map<String, Object> params);
 
 }

@@ -5,16 +5,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.okyoung.dao.BaseDao;
+
 @Repository("baseDao")
 public class BaseDaoImpl<T> implements BaseDao<T> {
 
-	@Autowired
+	@Resource
 	private SessionFactory sessionFactory;
 
 	@Override
@@ -46,7 +50,6 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	public void delete(T t) {
 	    this.sessionFactory.getCurrentSession().delete(t);
 	}
-
 
 	@Override
 	public void update(T t) {

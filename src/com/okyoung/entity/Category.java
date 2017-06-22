@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Category {
 
 	private int id;
-	private String ctgname;
+	private String ctgName;
 	private String detail;
 	private Set<ArticleType> articleTypes;
 	
@@ -32,12 +32,12 @@ public class Category {
 		this.id = id;
 	}
 	
-	@Column(name="ctgname")
-	public String getCtgname() {
-		return ctgname;
+	@Column(name="name")
+	public String getCtgName() {
+		return ctgName;
 	}
-	public void setCtgname(String ctgname) {
-		this.ctgname = ctgname;
+	public void setCtgName(String ctgname) {
+		this.ctgName = ctgname;
 	}
 	
 	@Column(name="detail")

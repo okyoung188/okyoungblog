@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class ArticleType {
 
 	private int id;
-	private String typename;
+	private String typeName;
 	private String detail;
 	private Set<Article> articles;
 	private Category category;
@@ -36,13 +36,13 @@ public class ArticleType {
 		this.id = id;
 	}
 
-	@Column(name = "typename")
-	public String getTypename() {
-		return typename;
+	@Column(name = "name")
+	public String getTypeName() {
+		return typeName;
 	}
 
-	public void setTypename(String typename) {
-		this.typename = typename;
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
 	@Column(name = "detail")
@@ -54,7 +54,7 @@ public class ArticleType {
 		this.detail = detail;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "articletype", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "articleType", cascade = CascadeType.ALL)
 	public Set<Article> getArticles() {
 		return articles;
 	}

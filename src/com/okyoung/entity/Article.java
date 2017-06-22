@@ -26,10 +26,10 @@ public class Article {
 	private String content;
 	private String indeximg;
 	private String editor;
-	private ArticleType articletype;
+	private ArticleType articleType;
 	private String keyword;
 	private Date time;
-	private Integer count;
+	private Integer viewCount;
 	private String detail;
 	private Set<Critique> critiques;
 
@@ -83,11 +83,11 @@ public class Article {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "type")
 	public ArticleType getType() {
-		return articletype;
+		return articleType;
 	}
 
 	public void setType(ArticleType type) {
-		this.articletype = type;
+		this.articleType = type;
 	}
 
 	@Column(name = "keyword")
@@ -109,13 +109,13 @@ public class Article {
 		this.time = time;
 	}
 
-	@Column(name = "count",nullable=true)
-	public Integer getCount() {
-		return count;
+	@Column(name = "viewcount",nullable=true)
+	public Integer getViewCount() {
+		return viewCount;
 	}
 
-	public void setCount(Integer count) {
-		this.count = count;
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
 	}
 
 	@Column(name = "detail")
