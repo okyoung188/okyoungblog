@@ -38,8 +38,8 @@ public class ArticleServiceImpl implements ArticleService {
 					BeanUtils.copyProperties(articleM, article);
 					int critiqueSize = article.getCritiques().size();
 					articleM.setCritiqueSize(critiqueSize);
-					articleM.setArticleType(article.getType().getTypeName());
-					articleM.setCtgName(article.getType().getCategory().getCtgName());
+					articleM.setArticleType(article.getArticleType().getTypeName());
+					articleM.setCtgName(article.getArticleType().getCategory().getCtgName());
 					articleModels.add(articleM);
 				}
 			}
@@ -64,8 +64,8 @@ public class ArticleServiceImpl implements ArticleService {
 					articleModels.add(articleM);
 					int critiqueSize = article.getCritiques().size();
 					articleM.setCritiqueSize(critiqueSize);
-					articleM.setArticleType(article.getType().getTypeName());
-					articleM.setCtgName(article.getType().getCategory().getCtgName());
+					articleM.setArticleType(article.getArticleType().getTypeName());
+					articleM.setCtgName(article.getArticleType().getCategory().getCtgName());
 					articleModels.add(articleM);
 				}
 			}
@@ -87,8 +87,8 @@ public class ArticleServiceImpl implements ArticleService {
 					BeanUtils.copyProperties(articleM, article);
 					int critiqueSize = article.getCritiques().size();
 					articleM.setCritiqueSize(critiqueSize);
-					articleM.setArticleType(article.getType().getTypeName());
-					articleM.setCtgName(article.getType().getCategory().getCtgName());
+					articleM.setArticleType(article.getArticleType().getTypeName());
+					articleM.setCtgName(article.getArticleType().getCategory().getCtgName());
 					articleModels.add(articleM);
 				}
 			}
@@ -110,8 +110,8 @@ public class ArticleServiceImpl implements ArticleService {
 				BeanUtils.copyProperties(articleModel, article);
 				int critiqueSize = article.getCritiques().size();
 				articleModel.setCritiqueSize(critiqueSize);
-				articleModel.setArticleType(article.getType().getTypeName());
-				articleModel.setCtgName(article.getType().getCategory().getCtgName());
+				articleModel.setArticleType(article.getArticleType().getTypeName());
+				articleModel.setCtgName(article.getArticleType().getCategory().getCtgName());
 			}
 		}
 		return articleModel;

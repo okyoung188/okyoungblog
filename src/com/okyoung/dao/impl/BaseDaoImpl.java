@@ -18,7 +18,7 @@ import com.okyoung.dao.BaseDao;
 @Repository("baseDao")
 public class BaseDaoImpl<T> implements BaseDao<T> {
 
-	@Resource
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override

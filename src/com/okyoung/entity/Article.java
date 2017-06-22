@@ -82,12 +82,12 @@ public class Article {
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "type")
-	public ArticleType getType() {
+	public ArticleType getArticleType() {
 		return articleType;
 	}
 
-	public void setType(ArticleType type) {
-		this.articleType = type;
+	public void setArticleType(ArticleType articleType) {
+		this.articleType = articleType;
 	}
 
 	@Column(name = "keyword")
