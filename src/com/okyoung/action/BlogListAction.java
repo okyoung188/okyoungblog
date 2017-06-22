@@ -16,17 +16,21 @@ public class BlogListAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         String queryStr = request.getQueryString();
         String typeParam = null;
-        String ctlgParam = null;
+        String ctgParam = null;
+        
+        //根据文章类型查找
         if (queryStr.matches("type=.+")){
-        	
-        } else if (queryStr.matches("ctlg=.+")){
-        	
-        } else {
-        	
+        	typeParam = queryStr.replaceAll("type=(.+)", "$1");
+        } else if (queryStr.matches("ctg=.+")){//根据文章目录
+        	ctgParam = queryStr.replaceAll("ctg=(.+)", "$1");
         }
         
-        if (typeParam != null && typeParam.matches("type=.+")){
-        	String param = typeParam.replaceAll("type=(.+)","$1");
+        
+        if (typeParam != null && !"".equals(typeParam)){
+        	
+        } else if (ctgParam != null && !"".equals(ctgParam)) {
+        	
+        } else {
         	
         }
 		return super.execute();
