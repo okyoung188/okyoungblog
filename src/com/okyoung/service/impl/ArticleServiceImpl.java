@@ -26,7 +26,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleModel> listByType(String param, int pageNum, int pageSize) throws Exception {
 		List<ArticleModel> articleModels = null;
 		if (pageNum > 0 && pageSize > 0 && param != null && !param.trim().equals("")){
-			String hql = " from Article a where a.articleType=:type orderby a.time desc";
+			String hql = " from Article a where a.articleType=:type order by a.time desc";
 			Map<String,Object> paramMap = new HashMap<String,Object>();
 			paramMap.put("type", param);
 			List<Article> articles = baseDao.find(hql, paramMap);
@@ -51,7 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleModel> listByCtg(String param, int pageNum, int pageSize) throws Exception {
 		List<ArticleModel> articleModels = null;
 		if (pageNum > 0 && pageSize > 0 && param != null && !param.trim().equals("")){
-			String hql = " from Article a left join fetch a.articleType b left join fetch b.category c where c.ctgName=:ctgName orderby a.time desc";
+			String hql = " from Article a left join fetch a.articleType b left join fetch b.category c where c.ctgName=:ctgName order by a.time desc";
 			Map<String,Object> paramMap = new HashMap<String,Object>();
 			paramMap.put("ctgName", param);
 			List<Article> articles = baseDao.find(hql, paramMap);
@@ -77,7 +77,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleModel> listAll(int pageNum, int pageSize) throws Exception {
 		List<ArticleModel> articleModels = null;
 		if (pageNum > 0 && pageSize > 0){
-			String hql = " from Article a orderby a.time desc";
+			String hql = " from Article a order by a.time desc";
 			List<Article> articles = baseDao.find(hql);
 			if (articles != null && articles.size() > 0){
 				articleModels = new ArrayList<ArticleModel>();
