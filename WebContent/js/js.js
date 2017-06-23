@@ -106,10 +106,10 @@ $(document).ready(function(e) {
 					 }
 				 }
 			 }else{
-				 disableDiv($('#pageDiv').children());
+				 disableDiv($('#firstPage,#prevPage,#prevPageG,#nextPage,#nextPageG,#lastPage'));
 			 }
 		 } else {
-			 disableDiv($('#pageDiv').children());
+			 disableDiv($('#firstPage,#prevPage,#prevPageG,#nextPage,#nextPageG,#lastPage'));
 		 }
 		 
 		 function fillPage(num){
@@ -158,7 +158,7 @@ $(document).ready(function(e) {
     	  obj = $(obj);	
     	}
     	obj.replaceWith(function(){
-    		$('<span>')$(this).html()
+    		return $('<span/>',{html:$(this).html(),class:'pageButtion disabledButton'});
     	});
     }
 	 
