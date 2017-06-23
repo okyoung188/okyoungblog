@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>page</title>
+<style>
+.pageDiv a{}
+.focusedPage{}
+.pageButtion{}
+.disabledButton{background-color: #A9A9A9}
+</style>
+</head>
+<body>
+	<div id="pageDiv" class="pageDiv">
+		<a id="firstPage" class="firstPage">首页</a>
+		<a id="prevPage" class="prevPage">< 上一页</a>
+		<a id="prevPageG" class="prevPageG">...</a>
+		<div id="page" class="page"></div>
+		<a id="nextPageG" class="nextPageG">...</a>
+		<a id="nextPage" class="nextPage">下一页 ></a>
+		<a id="lastPage" class="lastPage">尾页</a>
+		<div class="last" style="font-size: 14px;">共<span
+			class="totalPage"></span>页，跳转至 <input type="number" class="keuInput"
+			value="1">
+			<button type="button" class="btnSure">确定</button>
+		</div>
+	</div>
+</body>
+</html>

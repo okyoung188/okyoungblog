@@ -20,6 +20,8 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 	
 	List<ArticleModel> articles;
 	
+	long pageTotal;
+	
 	@Resource
 	ArticleService articleService;
 	
@@ -55,10 +57,13 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
         
         if (typeParam != null && !"".equals(typeParam)){
         	articles = articleService.listByType(typeParam, pageNum, pageSize);
+        	pageTotal = articleService.countByCtg(typeParam) % pageSize == 0 ? articleService.countByCtg(typeParam) : (articleService.countByCtg(typeParam) +1);
         } else if (ctgParam != null && !"".equals(ctgParam)) {
         	articles = articleService.listByCtg(typeParam, pageNum, pageSize);
+        	pageTotal = articleService.countByCtg(ctgParam) % pageSize == 0 ? articleService.countByCtg(typeParam) : (articleService.countByCtg(typeParam) +1);
         } else {
         	articles = articleService.listAll(pageNum, pageSize);
+        	pageTotal = articleService.countAll() % pageSize == 0 ? articleService.countByCtg(typeParam) : (articleService.countByCtg(typeParam) +1);
         }
 		return SUCCESS;
 	}

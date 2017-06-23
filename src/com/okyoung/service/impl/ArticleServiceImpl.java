@@ -117,4 +117,37 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleModel;
 	}
 
+	@Override
+	public long countByType(String param) throws Exception {
+		if (param != null && !param.trim().equals("")){
+			String hql = " from Article a where a.articleType=:type";
+			Map<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("type", param);
+			String hqlCount = "select count(*)";
+			long total = baseDao.count(hqlCount + hql, paramMap);
+			return total;
+		}
+		return 0;
+	}
+
+	@Override
+	public long countByCtg(String param) throws Exception {
+		if (param != null && !param.trim().equals("")){
+			String hql = " from Article a left join fetch a.articleType b left join fetch b.category c where c.ctgName=:ctgName";
+			Map<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("ctgName", param);
+			String hqlCount = "select count(*)";
+			return baseDao.count(hqlCount + hql, paramMap);			
+		}
+		return 0;
+	}
+
+	@Override
+	public long countAll() throws Exception {
+		String hql = "select count(*) from Article a";
+		return baseDao.count(hql);
+	}
+	
+
+
 }

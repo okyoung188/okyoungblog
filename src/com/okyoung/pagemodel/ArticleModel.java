@@ -23,7 +23,7 @@ public class ArticleModel {
 	private String ctgName;
 	private int pageNum = -1;
 	private int pageSize = 10;
-	private int pageTotal;
+	private long pageTotal;
 	
 	
 	public String getArticleType() {
@@ -50,10 +50,10 @@ public class ArticleModel {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}	
-	public int getPageTotal() {
+	public long getPageTotal() {
 		return pageTotal;
 	}
-	public void setPageTotal(int pageTotal) {
+	public void setPageTotal(long pageTotal) {
 		this.pageTotal = pageTotal;
 	}
 	

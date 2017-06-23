@@ -12,6 +12,8 @@ public interface ArticleService {
 	public List<ArticleModel> listByType(String param,int pageNum,int pageSize) throws Exception;
 	public List<ArticleModel> listByCtg(String param,int pageNum,int pageSize) throws Exception;
 	public List<ArticleModel> listAll(int pageNum,int pageSize) throws Exception;
-    
 	public ArticleModel queryById(int id) throws Exception;
+	public long countByType(String param) throws Exception;
+	public long countByCtg(String param) throws Exception;
+	public long countAll() throws Exception;
 }
