@@ -26,7 +26,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleModel> listByType(String param, int pageNum, int pageSize) throws Exception {
 		List<ArticleModel> articleModels = null;
 		if (pageNum > 0 && pageSize > 0 && param != null && !param.trim().equals("")){
-			String hql = " from Article a where a.articleType=:type order by a.time desc";
+			String hql = " from Article a where type=:type order by a.time desc";
 			Map<String,Object> paramMap = new HashMap<String,Object>();
 			paramMap.put("type", param);
 			List<Article> articles = baseDao.find(hql, paramMap);
@@ -35,7 +35,9 @@ public class ArticleServiceImpl implements ArticleService {
 				ArticleModel articleM = null;
 				for (Article article : articles){
 					articleM = new ArticleModel();
+					articleM.setRmHtml(true);
 					BeanUtils.copyProperties(articleM, article);
+					articleM.setIndeximg(article.getIndeximg());
 					int critiqueSize = article.getCritiques().size();
 					articleM.setCritiqueSize(critiqueSize);
 					articleM.setArticleType(article.getArticleType().getTypeName());
@@ -60,8 +62,9 @@ public class ArticleServiceImpl implements ArticleService {
 				ArticleModel articleM = null;
 				for (Article article : articles){
 					articleM = new ArticleModel();
+					articleM.setRmHtml(true);
 					BeanUtils.copyProperties(articleM, article);
-					articleModels.add(articleM);
+					articleM.setIndeximg(article.getIndeximg());
 					int critiqueSize = article.getCritiques().size();
 					articleM.setCritiqueSize(critiqueSize);
 					articleM.setArticleType(article.getArticleType().getTypeName());
@@ -84,7 +87,9 @@ public class ArticleServiceImpl implements ArticleService {
 				ArticleModel articleM = null;
 				for (Article article : articles){
 					articleM = new ArticleModel();
+					articleM.setRmHtml(true);
 					BeanUtils.copyProperties(articleM, article);
+					articleM.setIndeximg(article.getIndeximg());
 					int critiqueSize = article.getCritiques().size();
 					articleM.setCritiqueSize(critiqueSize);
 					articleM.setArticleType(article.getArticleType().getTypeName());
@@ -93,7 +98,6 @@ public class ArticleServiceImpl implements ArticleService {
 				}
 			}
 		}
-		logger.info("articleModel size: " + articleModels.size());
 		return articleModels;
 	}
 
@@ -109,6 +113,7 @@ public class ArticleServiceImpl implements ArticleService {
 				articleModel = new ArticleModel();
 				Article article = articles.get(0);
 				BeanUtils.copyProperties(articleModel, article);
+				articleModel.setIndeximg(article.getIndeximg());
 				int critiqueSize = article.getCritiques().size();
 				articleModel.setCritiqueSize(critiqueSize);
 				articleModel.setArticleType(article.getArticleType().getTypeName());

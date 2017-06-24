@@ -25,10 +25,18 @@ public class BeanTest {
 	@Test
 	public void initBean() throws Exception{
 		ArticleService service = (ArticleService) context.getBean("articleService");
-		List<ArticleModel> articles = service.listAll(1, 10);
+		List<ArticleModel> articles = service.listByCtg("感悟", 1, 10);
 		for (ArticleModel model : articles){
 			System.out.println(model);
 		}
+	}
+	
+	
+	
+	@Test
+	public void testAction() throws Exception{
+		BlogListAction action = (BlogListAction) context.getBean("blogListAction");
+		action.execute();
 	}
 	
 

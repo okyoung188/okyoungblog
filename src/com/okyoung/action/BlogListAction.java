@@ -13,6 +13,7 @@ import com.okyoung.pagemodel.ArticleModel;
 import com.okyoung.service.ArticleService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.opensymphony.xwork2.util.ValueStack;
 
 @Controller
 public class BlogListAction extends ActionSupport implements ModelDriven<ArticleModel>{
@@ -21,8 +22,9 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 	ArticleModel articleWithParam = new ArticleModel();
 	
 	List<ArticleModel> articles;
-	
 	long pageTotal;
+	int pageNum;
+	int pageSize;
 	
 	public List<ArticleModel> getArticles() {
 		return articles;
@@ -40,6 +42,22 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 		this.pageTotal = pageTotal;
 	}
 
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
 	@Resource
 	ArticleService articleService;
 	
@@ -52,8 +70,8 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 	public String execute() throws Exception {
         String typeParam = null;
         String ctgParam = null;
-        int pageNum = articleWithParam.getPageNum();
-        int pageSize = articleWithParam.getPageSize();
+        pageNum = articleWithParam.getPageNum();
+        pageSize = articleWithParam.getPageSize();
         // 默认页码和每页显示数目
         if (pageNum <= 0){
         	pageNum = 1;
@@ -72,19 +90,20 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 //        }
         typeParam = articleWithParam.getArticleType();
         ctgParam = articleWithParam.getCtgName();
-        
+        logger.info(ServletActionContext.getRequest().getCharacterEncoding());
+        logger.info("typeParam:" + typeParam);
+        logger.info("ctgParam:" + ctgParam);
         if (typeParam != null && !"".equals(typeParam)){
-        	articles = articleService.listByType(typeParam, pageNum, pageSize);
-        	pageTotal = articleService.countByCtg(typeParam) % pageSize == 0 ? articleService.countByCtg(typeParam) : (articleService.countByCtg(typeParam) +1);
+        	articles = articleService.listByType(typeParam, pageNum,pageSize);
+        	pageTotal = articleService.countByType(typeParam) % pageSize == 0 ? (articleService.countByType(typeParam)/pageSize) : (articleService.countByType(typeParam)/pageSize +1);
         } else if (ctgParam != null && !"".equals(ctgParam)) {
         	articles = articleService.listByCtg(typeParam, pageNum, pageSize);
-        	pageTotal = articleService.countByCtg(ctgParam) % pageSize == 0 ? articleService.countByCtg(typeParam) : (articleService.countByCtg(typeParam) +1);
+        	pageTotal = articleService.countByCtg(ctgParam) % pageSize == 0 ? (articleService.countByCtg(ctgParam)/pageSize) : (articleService.countByCtg(ctgParam)/pageSize +1);
         } else {
         	articles = articleService.listAll(pageNum, pageSize);
-        	pageTotal = articleService.countAll() % pageSize == 0 ? articleService.countByCtg(typeParam) : (articleService.countByCtg(typeParam) +1);
-        	logger.info("article size : " + articles.size());
-        	logger.info("pageTotal:" + pageTotal);
+        	pageTotal = articleService.countAll() % pageSize == 0 ? (articleService.countAll()/pageSize) : (articleService.countAll()/pageSize +1);
         }
+        ValueStack valuestack = ServletActionContext.getContext().getValueStack();
 		return SUCCESS;
 	}
 

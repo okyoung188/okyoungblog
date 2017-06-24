@@ -15,7 +15,16 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/page.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jqPaginator.min.js"></script>
-
+<style>
+.pageDiv{font:14px "微软雅黑", "Microsoft Yahei";text-align:center;width:100%;height:50px;padding:10px 10px;background-color:#D6D6D6}
+.pageDiv div{float:left;line-height:25px}
+.pageDiv a {float:left;dispaly:inline-block;width:70px;height:25px;margin-left:5px;background:#f0f0f0;line-height:25px}
+.pageDiv a.focusedPage{background-color:red}
+.pageDiv span.disabledButton{background-color: #D3A6A9}
+.pageDiv>span{float:left;dispaly:inline-block;width:70px;height:25px;margin-left:5px;background:#f0f0f0;line-height:25px}
+.pageButtons a{float:left;dispaly:inline-block;width:45px;height:25px;backrgound:#f0f0f0}
+.pageDiv a:hover{background-color:#e0e0e0}
+</style>
 <!--[if lt IE 9]>
 <script src="js/modernizr.js"></script>
 <![endif]-->
@@ -40,7 +49,6 @@
 		<div class="blogs">
 			<ul class="bloglist">
 			    <li style="border-right:0px;"><div class="arrow_box currposition"><span>当前的位置：</span><a id="current"></a></div></li>
-			    <span><s:property value="pageTotal"/></span>
 				<s:iterator value="articles" var="art">
 					<li>
 						<div class="arrow_box">
@@ -63,8 +71,15 @@
 						</div> <!--arrow_box end-->
 					</li>
 				</s:iterator>
-				<li  style="border-right:0px;">
-					<div id="pagination">
+				<li style="border-right: 0px;">
+					<div id="pageDiv" class="pageDiv">
+						<a id="firstPage" class="firstPage">首页</a> <a id="prevPage" class="prevPage">< 上一页</a> <a id="prevPageG" class="prevPageG">...</a>
+						<div id="pageButtons" class="pageButtons"></div>
+						<a id="nextPageG" class="nextPageG">...</a> <a id="nextPage" class="nextPage">下一页 ></a> <a id="lastPage" class="lastPage">尾页</a>
+						<div class="last" style="font-size: 14px;">
+							共<span id="totalPage" class="totalPage"></span>页，跳转至 <input type="number" class="keuInput" value="1" style="width: 35px">
+							<button type="button" class="btnSure">确定</button>
+						</div>
 					</div>
 				</li>
 			</ul>
@@ -233,5 +248,120 @@
 		<a id="togbook" href="/e/tool/gbook/?bid=1"></a> <a id="gotop" href="javascript:void(0)"></a>
 	</div>
 	<!-- 代码结束 -->
+	
+	<script type="text/javascript">
+	function initPage() {
+		var reqType='articleType', reqData='心得体会';
+		var pageTotal=<s:property value="[1].pageTotal"/>, pageNum=<s:property value="[1].pageNum"/>, pageSize=<s:property value="[1].pageSize"/>;
+
+		//#pageTotal
+		if (pageTotal > 0) {
+			$('#pageTotal').text(pageTotal);
+		} else {
+			$('#pageTotal').text('0');
+		}
+		
+		// #pageDiv
+		if (pageNum && pageTotal && pageNum <= pageTotal) {
+			if (pageGroup >= groupSize - 1) {//last group
+				var index = (pageNum - 1) % pageSize;
+				fillPage(pageTotal);// append number
+			} else {
+				var index = (pageNum - 1) % pageSize;
+				fillPage(pageSize);
+			}
+			$('#totalPage').html(pageTotal);
+		} else {
+			return;
+		}
+		
+		//#firstPage,prevPage,prevPageG,nextPage,nextPageG,lastPage
+		if (pageTotal > 0) {
+			if (pageNum && pageNum <= pageTotal) {
+				if (pageNum == 1) {
+					disableDiv($('#firstPage'));
+					disableDiv($('#prevPage'));
+				} else if (pageNum == pageTotal) {
+					disableDiv($('#lastPage'));
+					disableDiv($('#nextPage'));
+				} else {
+					var index = (pageNum - 1) % pageSize;
+					var pageGroup = (pageNum - 1) / pageSize;
+					var groupSize = pageTotal / pageSize
+							+ (pageTotal % pageSize > 0 ? 1 : 0);
+					if (pageGroup >= groupSize - 1) {
+						diableDiv($('#nextPageG'));
+					}
+					if (!pageGroup) {
+						disableDiv($('#prevPageG'));
+					}
+				}
+			} else {
+				disableDiv($('#firstPage,#prevPage,#prevPageG,#nextPage,#nextPageG,#lastPage'));
+			}
+		} else {
+			disableDiv($('#firstPage,#prevPage,#prevPageG,#nextPage,#nextPageG,#lastPage'));
+		}
+
+		$('#firstPage').on('click', (function() {
+			return function(){requestBlog(reqType, reqData, 1, pageSize)};
+		})());
+		$('#lastPage').on('click', (function() {
+			return function(){requestBlog(reqType, reqData, pageTotal, pageSize)};
+		})());
+		$('#prevPage').on('click', (function() {
+			return function(){requestBlog(reqType, reqData, pageNum - 1, pageSize)};
+		})());
+		$('#nextPage').on('click', (function() {
+			return function(){requestBlog(reqType, reqData, pageNum + 1, pageSize)};
+		})());
+		$('#prevPageG').on(
+				'click',
+				(function() {
+					return function(){requestBlog(reqType, reqData, (pageGroup - 1) * pageSize + 1, pageSize)};
+				})()
+				);
+		$('#nextPageG').on(
+				'click',
+				(function() {
+					return function(){requestBlog(reqType, reqData, (pageGroup + 1) * pageSize + 1, pageSize)};
+				})()
+	            );
+		
+		function fillPage(num) {
+			if (!num) {
+				num = 5;//default 5
+			}
+			for (var i = 0; i < num; i++) {
+				$('#pageButtons').append(
+						'<a href="javascript:void(0)" class="pageButton"'
+								+ 'onclick="requestBlog(\'' + reqType + '\',\''
+								+ reqData + '\',' + (pageNum - index + i)
+								+ ',' + pageSize + ')">'
+								+ (pageNum - index + i) + '</a>');
+			}
+			var focused = $('#pageButtons a').get(index);
+		    $(focused).addClass('focusedPage');
+		/* 	$(focused).css('background-color','red'); */
+		}
+	}
+	initPage();
+
+	function requestBlog(reqType, reqData, pageNum, pageSize) {
+		window.location.href = window.location.href +'?' + reqType + '=' + encodeURI(reqData) + '&'
+				+ 'pageNum=' + pageNum + '&' + 'pageSize=' + pageSize;
+	}
+	function disableDiv(obj) {
+		if (!obj instanceof jQuery) {
+			obj = $(obj);
+		}
+		obj.replaceWith(function() {
+			return $('<span/>', {
+				html : $(this).html(),
+				class : 'disabledButton'
+			});
+		});
+	}
+	</script>
 </body>
 </html>
