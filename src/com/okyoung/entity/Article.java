@@ -1,5 +1,6 @@
 package com.okyoung.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "article", schema = "okyoungblog")
-public class Article {
+public class Article implements Serializable{
 
 	private int id;
 	private String title;
@@ -81,7 +82,7 @@ public class Article {
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "type")
+	@JoinColumn(name = "type",referencedColumnName="name")
 	public ArticleType getArticleType() {
 		return articleType;
 	}

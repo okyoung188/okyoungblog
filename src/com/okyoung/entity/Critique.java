@@ -1,5 +1,6 @@
 package com.okyoung.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -17,7 +18,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "critique", schema = "okyoungblog")
-public class Critique {
+public class Critique implements Serializable{
 	private int id;
 	private Article article;
 	private String content;

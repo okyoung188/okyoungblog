@@ -1,5 +1,6 @@
 package com.okyoung.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "articletype", schema = "okyoungblog")
-public class ArticleType {
+public class ArticleType implements Serializable{
 
 	private int id;
 	private String typeName;
@@ -36,7 +37,7 @@ public class ArticleType {
 		this.id = id;
 	}
 
-	@Column(name = "name")
+	@Column(name = "name",unique=true)
 	public String getTypeName() {
 		return typeName;
 	}
@@ -64,7 +65,7 @@ public class ArticleType {
 	}
 
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	@JoinColumn(name="category")
+	@JoinColumn(name="category",referencedColumnName="name")
 	public Category getCategory() {
 		return category;
 	}

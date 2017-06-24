@@ -16,7 +16,7 @@ import com.okyoung.entity.ArticleType;
 import com.okyoung.pagemodel.ArticleModel;
 import com.okyoung.service.ArticleService;
 
-@Service
+@Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
 	
 	@Resource
@@ -93,6 +93,7 @@ public class ArticleServiceImpl implements ArticleService {
 				}
 			}
 		}
+		logger.info("articleModel size: " + articleModels.size());
 		return articleModels;
 	}
 

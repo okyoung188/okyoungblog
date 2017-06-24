@@ -29,10 +29,6 @@
 	<constant name="struts.dispatcher.parametersWorkaround" value="false" />
 
 	<package name="basePackage" namespace="/" extends="json-default">
-	    <interceptors>
-	    <interceptor name="" class=""></interceptor>
-	    
-	    </interceptors>
 	    
 	    <global-results>
 	         <result name="error">/WEB-INF/jsp/error.jsp</result>	

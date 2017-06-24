@@ -1,5 +1,6 @@
 package com.okyoung.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="category",schema="okyoungblog")
-public class Category {
+public class Category implements Serializable{
 
 	private int id;
 	private String ctgName;
@@ -32,7 +33,7 @@ public class Category {
 		this.id = id;
 	}
 	
-	@Column(name="name")
+	@Column(name="name",unique=true)
 	public String getCtgName() {
 		return ctgName;
 	}

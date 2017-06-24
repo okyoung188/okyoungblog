@@ -1,5 +1,6 @@
 package com.okyoung.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="user",schema="okyoungblog",uniqueConstraints={@UniqueConstraint(columnNames={"nickname","email"})})
-public class User {
+public class User implements Serializable{
 	private int id;
 	private String nickname;
 	private String email;

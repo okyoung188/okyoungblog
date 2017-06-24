@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
@@ -15,6 +16,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 @Controller
 public class BlogListAction extends ActionSupport implements ModelDriven<ArticleModel>{
+	Logger logger  = Logger.getLogger(BlogListAction.class);
 	
 	ArticleModel articleWithParam = new ArticleModel();
 	
@@ -22,6 +24,22 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 	
 	long pageTotal;
 	
+	public List<ArticleModel> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<ArticleModel> articles) {
+		this.articles = articles;
+	}
+
+	public long getPageTotal() {
+		return pageTotal;
+	}
+
+	public void setPageTotal(long pageTotal) {
+		this.pageTotal = pageTotal;
+	}
+
 	@Resource
 	ArticleService articleService;
 	
@@ -64,6 +82,8 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
         } else {
         	articles = articleService.listAll(pageNum, pageSize);
         	pageTotal = articleService.countAll() % pageSize == 0 ? articleService.countByCtg(typeParam) : (articleService.countByCtg(typeParam) +1);
+        	logger.info("article size : " + articles.size());
+        	logger.info("pageTotal:" + pageTotal);
         }
 		return SUCCESS;
 	}
