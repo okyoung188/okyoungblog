@@ -10,6 +10,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
 import com.okyoung.pagemodel.ArticleModel;
+import com.okyoung.pagemodel.PageBean;
 import com.okyoung.service.ArticleService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -20,11 +21,10 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 	Logger logger  = Logger.getLogger(BlogListAction.class);
 	
 	ArticleModel articleWithParam = new ArticleModel();
-	
+	PageBean<ArticleModel> pageBean;
 	List<ArticleModel> articles;
-	long pageTotal;
-	int pageNum;
-	int pageSize;
+	String reqType;
+	String reqData;
 	
 	public List<ArticleModel> getArticles() {
 		return articles;
@@ -32,30 +32,6 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 
 	public void setArticles(List<ArticleModel> articles) {
 		this.articles = articles;
-	}
-
-	public long getPageTotal() {
-		return pageTotal;
-	}
-
-	public void setPageTotal(long pageTotal) {
-		this.pageTotal = pageTotal;
-	}
-
-	public int getPageNum() {
-		return pageNum;
-	}
-
-	public void setPageNum(int pageNum) {
-		this.pageNum = pageNum;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
 	}
 
 	@Resource
@@ -68,42 +44,24 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 
 	@Override
 	public String execute() throws Exception {
-        String typeParam = null;
-        String ctgParam = null;
-        pageNum = articleWithParam.getPageNum();
-        pageSize = articleWithParam.getPageSize();
-        // 默认页码和每页显示数目
-        if (pageNum <= 0){
-        	pageNum = 1;
-        }
-        if (pageSize <= 0){
-        	pageSize = 10;
-        }
-//        HttpServletRequest request = ServletActionContext.getRequest();
-//        String queryStr = request.getQueryString();
-//
-//        //根据文章类型查找
-//        if (queryStr.matches("type=.+")){
-//        	typeParam = queryStr.replaceAll("type=(.+)", "$1");
-//        } else if (queryStr.matches("ctg=.+")){//根据文章目录
-//        	ctgParam = queryStr.replaceAll("ctg=(.+)", "$1");
-//        }
-        typeParam = articleWithParam.getArticleType();
-        ctgParam = articleWithParam.getCtgName();
+        int pageNum = articleWithParam.getPageNum();
+        int pageSize = articleWithParam.getPageSize();
+        String articleType = articleWithParam.getArticleType();
+        String ctgName = articleWithParam.getCtgName();
+        
         logger.info(ServletActionContext.getRequest().getCharacterEncoding());
-        logger.info("typeParam:" + typeParam);
-        logger.info("ctgParam:" + ctgParam);
-        if (typeParam != null && !"".equals(typeParam)){
-        	articles = articleService.listByType(typeParam, pageNum,pageSize);
-        	pageTotal = articleService.countByType(typeParam) % pageSize == 0 ? (articleService.countByType(typeParam)/pageSize) : (articleService.countByType(typeParam)/pageSize +1);
-        } else if (ctgParam != null && !"".equals(ctgParam)) {
-        	articles = articleService.listByCtg(typeParam, pageNum, pageSize);
-        	pageTotal = articleService.countByCtg(ctgParam) % pageSize == 0 ? (articleService.countByCtg(ctgParam)/pageSize) : (articleService.countByCtg(ctgParam)/pageSize +1);
+        logger.info("typeParam:" + articleType);
+        logger.info("ctgParam:" + ctgName);
+        
+        if (articleType != null && !"".equals(articleType)){
+        	pageBean = articleService.listByType(reqData, pageNum,pageSize);
+        } else if (ctgName != null && !"".equals(ctgName)) {
+        	pageBean = articleService.listByCtg(reqData, pageNum, pageSize);
         } else {
-        	articles = articleService.listAll(pageNum, pageSize);
-        	pageTotal = articleService.countAll() % pageSize == 0 ? (articleService.countAll()/pageSize) : (articleService.countAll()/pageSize +1);
-        }
-        ValueStack valuestack = ServletActionContext.getContext().getValueStack();
+        	pageBean = articleService.listAll(pageNum, pageSize);
+        }  
+        ValueStack valueStack = ServletActionContext.getContext().getValueStack();
+        valueStack.push(pageBean);
 		return SUCCESS;
 	}
 

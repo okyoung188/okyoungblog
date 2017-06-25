@@ -48,8 +48,8 @@
 	<div id="mainbody">
 		<div class="blogs">
 			<ul class="bloglist">
-			    <li style="border-right:0px;"><div class="arrow_box currposition"><span>当前的位置：</span><a id="current"></a></div></li>
-				<s:iterator value="articles" var="art">
+			    <li style="border-right:0px;"><div class="arrow_box currposition"><span>当前的位置：</span><a id="current"><s:property value=""/></a></div></li>
+				<s:iterator value="modelList" var="art">
 					<li>
 						<div class="arrow_box">
 							<div class="ti"></div>
@@ -248,12 +248,12 @@
 		<a id="togbook" href="/e/tool/gbook/?bid=1"></a> <a id="gotop" href="javascript:void(0)"></a>
 	</div>
 	<!-- 代码结束 -->
-	
 	<script type="text/javascript">
 	function initPage() {
-		var reqType='articleType', reqData='心得体会';
-		var pageTotal=<s:property value="[1].pageTotal"/>, pageNum=<s:property value="[1].pageNum"/>, pageSize=<s:property value="[1].pageSize"/>;
-
+		var reqType='<s:property value="[0].reqType"/>', reqData='<s:property value="[0].reqData"/>';
+		var pageTotal=<s:property value="[0].pageTotal"/>, pageNum=<s:property value="[0].pageNum"/>, pageSize=<s:property value="[0].pageSize"/>;
+        var pageGSize = 5;//one group have 5 page btns
+		
 		//#pageTotal
 		if (pageTotal > 0) {
 			$('#pageTotal').text(pageTotal);
@@ -262,13 +262,15 @@
 		}
 		
 		// #pageDiv
-		if (pageNum && pageTotal && pageNum <= pageTotal) {
+		if (pageNum>0&& pageTotal>0 && pageNum <= pageTotal) {
+			var index = (pageNum - 1) % pageGSize;//start with 0
+			var pageGroup = Math.floor((pageNum - 1) / pageGSize);//start with 0
+			var groupSize = Math.floor(pageTotal / pageGSize)
+					+ (pageTotal % pageGSize > 0 ? 1 : 0);
 			if (pageGroup >= groupSize - 1) {//last group
-				var index = (pageNum - 1) % pageSize;
-				fillPage(pageTotal);// append number
+				fillPage(pageTotal - pageGroup*pageGSize);// append number
 			} else {
-				var index = (pageNum - 1) % pageSize;
-				fillPage(pageSize);
+				fillPage(pageGSize);
 			}
 			$('#totalPage').html(pageTotal);
 		} else {
@@ -276,31 +278,18 @@
 		}
 		
 		//#firstPage,prevPage,prevPageG,nextPage,nextPageG,lastPage
-		if (pageTotal > 0) {
-			if (pageNum && pageNum <= pageTotal) {
-				if (pageNum == 1) {
-					disableDiv($('#firstPage'));
-					disableDiv($('#prevPage'));
-				} else if (pageNum == pageTotal) {
-					disableDiv($('#lastPage'));
-					disableDiv($('#nextPage'));
-				} else {
-					var index = (pageNum - 1) % pageSize;
-					var pageGroup = (pageNum - 1) / pageSize;
-					var groupSize = pageTotal / pageSize
-							+ (pageTotal % pageSize > 0 ? 1 : 0);
-					if (pageGroup >= groupSize - 1) {
-						diableDiv($('#nextPageG'));
-					}
-					if (!pageGroup) {
-						disableDiv($('#prevPageG'));
-					}
-				}
-			} else {
-				disableDiv($('#firstPage,#prevPage,#prevPageG,#nextPage,#nextPageG,#lastPage'));
-			}
-		} else {
-			disableDiv($('#firstPage,#prevPage,#prevPageG,#nextPage,#nextPageG,#lastPage'));
+		if (pageNum == 1) {
+			disableDiv($('#firstPage'));
+			disableDiv($('#prevPage'));
+		} else if (pageNum == pageTotal) {
+			disableDiv($('#lastPage'));
+			disableDiv($('#nextPage'));
+		} 
+		if (pageGroup >= groupSize - 1) {
+			disableDiv($('#nextPageG'));
+		}
+		if (!pageGroup) {
+			disableDiv($('#prevPageG'));
 		}
 
 		$('#firstPage').on('click', (function() {
@@ -318,13 +307,13 @@
 		$('#prevPageG').on(
 				'click',
 				(function() {
-					return function(){requestBlog(reqType, reqData, (pageGroup - 1) * pageSize + 1, pageSize)};
+					return function(){requestBlog(reqType, reqData, (pageGroup - 1) * pageGSize + 1, pageSize)};
 				})()
 				);
 		$('#nextPageG').on(
 				'click',
 				(function() {
-					return function(){requestBlog(reqType, reqData, (pageGroup + 1) * pageSize + 1, pageSize)};
+					return function(){requestBlog(reqType, reqData, (pageGroup + 1) * pageGSize + 1, pageSize)};
 				})()
 	            );
 		
@@ -348,7 +337,7 @@
 	initPage();
 
 	function requestBlog(reqType, reqData, pageNum, pageSize) {
-		window.location.href = window.location.href +'?' + reqType + '=' + encodeURI(reqData) + '&'
+		window.location.href = window.location.href.replace(/(.*?)\?.+/, "$1") +'?' + reqType + '=' + encodeURI(reqData) + '&'
 				+ 'pageNum=' + pageNum + '&' + 'pageSize=' + pageSize;
 	}
 	function disableDiv(obj) {

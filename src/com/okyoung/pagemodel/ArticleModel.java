@@ -6,7 +6,11 @@ import java.util.Set;
 import com.config.AppConfig;
 import com.okyoung.entity.ArticleType;
 import com.okyoung.entity.Critique;
-
+/**
+ * 用于接受前台参数，并传递文章内容
+ * @author Harry
+ *
+ */
 public class ArticleModel {
 	
 	private int id;// two way
@@ -21,7 +25,7 @@ public class ArticleModel {
 	private int critiqueSize;
 	private String articleType;// two way
 	private String ctgName;
-	private int pageNum = -1;
+	private int pageNum = 1;
 	private int pageSize = 10;
 	private long pageTotal;
 	//需要remove content中的html标签时为true,default false
