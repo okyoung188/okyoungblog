@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.okyoung.action.BlogListAction;
 import com.okyoung.pagemodel.ArticleModel;
+import com.okyoung.pagemodel.Menu;
 import com.okyoung.pagemodel.PageBean;
 import com.okyoung.service.ArticleService;
 import com.okyoung.service.impl.ArticleServiceImpl;
@@ -27,9 +28,18 @@ public class BeanTest {
 	public void initBean() throws Exception{
 		ArticleService service = (ArticleService) context.getBean("articleService");
 		PageBean<ArticleModel> pageBean = service.listByCtg("感悟", 1, 10);
-		List<ArticleModel> articles = pageBean.getModelList();
-		for (ArticleModel model : articles){
-			System.out.println(model);
+//		List<ArticleModel> articles = pageBean.getModelList();
+//		for (ArticleModel model : articles){
+//			System.out.println(model);
+//		}
+		Menu menu = pageBean.getMenu();
+		List<Menu> subMenus = menu.getSubMenu();
+		for (Menu subMenu:subMenus){
+			System.out.println(subMenu);
+			List<Menu> subs = subMenu.getSubMenu();
+			for(Menu m: subs){
+				System.out.println(m);
+			}
 		}
 	}
 	

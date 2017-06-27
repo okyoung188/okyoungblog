@@ -65,6 +65,7 @@ public class ArticleServiceImpl implements ArticleService {
 		pageBean.setPageSize(pageSize);
 		pageBean.setReqData(param);
 		pageBean.setReqType(ATypeMenu.reqType);
+		pageBean.setMenu(getMenu());
 		return pageBean;
 	}
 
@@ -101,6 +102,7 @@ public class ArticleServiceImpl implements ArticleService {
 		pageBean.setPageSize(pageSize);
 		pageBean.setReqData(param);
 		pageBean.setReqType(CtgMenu.reqType);
+		pageBean.setMenu(getMenu());
 		return pageBean;
 	}
 
@@ -133,6 +135,7 @@ public class ArticleServiceImpl implements ArticleService {
 		pageBean.setPageTotal(pageTotal);
 		pageBean.setPageNum(pageNum);
 		pageBean.setPageSize(pageSize);
+		pageBean.setMenu(getMenu());
 		return pageBean;
 	}
 
@@ -211,6 +214,7 @@ public class ArticleServiceImpl implements ArticleService {
             	int size = type.getArticles().size();
             	num+= size;
             	typeMenu.setSize(size);
+            	typeMenus.add(typeMenu);
             }
             ctgMenu.setSize(num);
             ctgMenu.setSubMenu(typeMenus);
