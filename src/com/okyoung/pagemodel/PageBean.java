@@ -17,7 +17,7 @@ public class PageBean<T> {
 	/**
 	 *当前请求所在位置，借用Menu类，实际另做一个Position类比较好
 	 */
-	Menu position;
+	Position position;
 	/**
 	 * Menu tree of this app
 	 */
@@ -51,10 +51,10 @@ public class PageBean<T> {
 	public void setPageSize(long pageSize) {
 		this.pageSize = pageSize;
 	}
-	public Menu getPosition() {
+	public Position getPosition() {
 		return position;
 	}
-	public void setPosition(Menu position) {
+	public void setPosition(Position position) {
 		this.position = position;
 	}
 	public String getReqType() {

@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import com.okyoung.pagemodel.ArticleModel;
 import com.okyoung.pagemodel.Menu;
 import com.okyoung.pagemodel.PageBean;
+import com.okyoung.pagemodel.Position;
 
 public interface ArticleService {
 	public Logger logger = Logger.getLogger(ArticleService.class);
@@ -18,5 +19,5 @@ public interface ArticleService {
 	public long countByCtg(String param) throws Exception;
 	public long countAll() throws Exception;
 	public Menu getMenu() throws Exception;
-	public Menu getPosition(String param, String queryType) throws Exception;
+	public Position getPosition(String param, String queryType) throws Exception;
 }

@@ -1,12 +1,9 @@
 package com.okyoung.pagemodel;
 
-public class CtgMenu extends Menu {
-	
-	public static String reqType = "ctgName";		
+public class CtgMenu extends Menu {	
 
 	{
-	 super.reqType = CtgMenu.reqType;
-	 super.superMenu = new BlogMenu();
+	 super.reqType = MenuUtil.CATEGORY_REQTYPE;
 	}
 
 }

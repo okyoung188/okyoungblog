@@ -17,7 +17,6 @@ public class Menu {
 	protected String reqData;
 	protected int size;
 	protected List<Menu> subMenu;
-	protected Menu superMenu;
 
 	public String getName() {
 		return name;
@@ -59,12 +58,5 @@ public class Menu {
 		this.subMenu = subMenu;
 	}
 
-	public Menu getSuperMenu() {
-		return superMenu;
-	}
-
-	public void setSuperMenu(Menu superMenu) {
-		this.superMenu = superMenu;
-	}
 
 }

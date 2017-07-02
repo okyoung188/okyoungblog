@@ -3,10 +3,10 @@ package com.okyoung.action;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.okyoung.pagemodel.ArticleModel;
@@ -17,6 +17,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
 
 @Controller
+@Scope("prototype")
 public class BlogListAction extends ActionSupport implements ModelDriven<ArticleModel>{
 	Logger logger  = Logger.getLogger(BlogListAction.class);
 	
@@ -48,15 +49,20 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
         int pageSize = articleWithParam.getPageSize();
         String articleType = articleWithParam.getArticleType();
         String ctgName = articleWithParam.getCtgName();
-        
+        if(articleType != null){
+        	articleType = new String(articleType.getBytes("ISO-8859-1"),"utf-8");	
+        }
+        if(ctgName != null){
+        	ctgName = new String(ctgName.getBytes("ISO-8859-1"),"utf-8");
+        }        
         logger.info(ServletActionContext.getRequest().getCharacterEncoding());
         logger.info("typeParam:" + articleType);
         logger.info("ctgParam:" + ctgName);
         
         if (articleType != null && !"".equals(articleType)){
-        	pageBean = articleService.listByType(reqData, pageNum,pageSize);
+        	pageBean = articleService.listByType(articleType, pageNum,pageSize);
         } else if (ctgName != null && !"".equals(ctgName)) {
-        	pageBean = articleService.listByCtg(reqData, pageNum, pageSize);
+        	pageBean = articleService.listByCtg(ctgName, pageNum, pageSize);
         } else {
         	pageBean = articleService.listAll(pageNum, pageSize);
         }  

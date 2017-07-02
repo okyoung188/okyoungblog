@@ -21,7 +21,9 @@ import com.okyoung.pagemodel.ArticleModel;
 import com.okyoung.pagemodel.BlogMenu;
 import com.okyoung.pagemodel.CtgMenu;
 import com.okyoung.pagemodel.Menu;
+import com.okyoung.pagemodel.MenuUtil;
 import com.okyoung.pagemodel.PageBean;
+import com.okyoung.pagemodel.Position;
 import com.okyoung.service.ArticleService;
 
 @Service("articleService")
@@ -64,8 +66,9 @@ public class ArticleServiceImpl implements ArticleService {
 		pageBean.setPageNum(pageNum);
 		pageBean.setPageSize(pageSize);
 		pageBean.setReqData(param);
-		pageBean.setReqType(ATypeMenu.reqType);
+		pageBean.setReqType(MenuUtil.ATYPE_REQTYPE);
 		pageBean.setMenu(getMenu());
+		pageBean.setPosition(getPosition(param, MenuUtil.ATYPE_REQTYPE));
 		return pageBean;
 	}
 
@@ -101,8 +104,9 @@ public class ArticleServiceImpl implements ArticleService {
 		pageBean.setPageNum(pageNum);
 		pageBean.setPageSize(pageSize);
 		pageBean.setReqData(param);
-		pageBean.setReqType(CtgMenu.reqType);
+		pageBean.setReqType(MenuUtil.CATEGORY_REQTYPE);
 		pageBean.setMenu(getMenu());
+		pageBean.setPosition(getPosition(param, MenuUtil.CATEGORY_REQTYPE));
 		return pageBean;
 	}
 
@@ -136,6 +140,7 @@ public class ArticleServiceImpl implements ArticleService {
 		pageBean.setPageNum(pageNum);
 		pageBean.setPageSize(pageSize);
 		pageBean.setMenu(getMenu());
+		pageBean.setPosition(getPosition(null, null));
 		return pageBean;
 	}
 
@@ -225,27 +230,35 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public Menu getPosition(String param,String queryType) throws Exception {
-		Menu menu = null;
-		if (queryType!= null && queryType.equals(CtgMenu.reqType)) {
-            menu = new CtgMenu();
-            menu.setName(param);
-            menu.setReqData(param);
-		} else if (queryType!= null && queryType.equals(ATypeMenu.reqType)) {
-            menu = new ATypeMenu();
-            Menu ctgMenu = new CtgMenu();
+	public Position getPosition(String param,String queryType) throws Exception {
+		Position rtPosition = new Position(MenuUtil.MAINPAGE_NAME,null,null);
+		if (queryType!= null && queryType.equals(MenuUtil.CATEGORY_REQTYPE)) {
+            Position catPosition = new Position();
+            catPosition.setName(param);
+            catPosition.setReqData(param);
+            catPosition.setReqType(MenuUtil.CATEGORY_REQTYPE);
+            rtPosition.setSubPosition(catPosition);
+		} else if (queryType!= null && queryType.equals(MenuUtil.ATYPE_REQTYPE)) {
+            Position typePosition = new Position();
+            Position ctPstion = new Position();
             String hql = "select c from ArticleType b left join b.category c where b.typeName=:name";
             Map<String,Object> paramMap = new HashMap<String,Object>();
             paramMap.put("name", param);
             List<Category> catList = categoryDao.find(hql, paramMap);
-            String catName = catList.get(0).getCtgName();
-            ctgMenu.setName(catName);
-            ctgMenu.setReqData(catName);
-            menu.setName(param);
-            menu.setReqData(param);
-            menu.setSuperMenu(ctgMenu);
+            if(catList != null){
+                String catName = catList.get(0).getCtgName();
+                ctPstion.setName(catName);
+                ctPstion.setReqType(MenuUtil.CATEGORY_REQTYPE);
+                ctPstion.setReqData(catName);
+                typePosition.setName(param);
+                typePosition.setReqType(MenuUtil.ATYPE_REQTYPE);
+                typePosition.setReqData(param);
+                ctPstion.setSubPosition(typePosition);
+                rtPosition.setSubPosition(ctPstion);
+            }
 		}
-		return menu;
+		System.out.println(rtPosition);
+		return rtPosition;
 	}
 
 	
