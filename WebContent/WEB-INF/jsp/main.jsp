@@ -69,13 +69,13 @@
 								<a href="${pageContext.request.contextPath}/blogshow?id=<s:property value="#art.id"/>" target="_blank"><s:property value="#art.title"/></a>
 							</h2>
 							<ul class="textinfo">
-								<a href="/"><img src='<s:property value="#art.indeximg"/>'></a>
+								<a href="${pageContext.request.contextPath}/blogshow?id=<s:property value="#art.id"/>" target="_blank"><img src='<s:property value="#art.indeximg"/>'></a>
 								<p><s:property value="#art.content"/></p>
 							</ul>
 							<ul class="details">
-								<li class="likes"><a href="#"><s:property value="#art.viewCount"/></a></li>
-								<li class="comments"><a href="#"><s:property value="#art.critiqueSize"/></a></li>
-								<li class="icon-time"><a href="#"><s:property value="#art.time"/></a></li>
+								<li class="likes"><a href="javascript:;"><s:property value="#art.viewCount"/></a></li>
+								<li class="comments"><a href="javascript:;"><s:property value="#art.critiqueSize"/></a></li>
+								<li class="icon-time"><a href="javascript:;"><s:property value="#art.time"/></a></li>
 							</ul>
 						</div> <!--arrow_box end-->
 					</li>

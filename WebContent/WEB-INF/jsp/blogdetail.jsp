@@ -15,6 +15,12 @@
 <title>博客页</title>
 <style>
 .blogsection > div {margin:20px 0;}
+.articleComp{text-align:center;margin:20px auto}
+h1{padding-top:20px}
+.crtqArea{margin-top:100px}
+form>div{margin:10px 35px}
+.hint{font-size:12px;color:#a6a6a6}
+
 </style>
 </head>
 <body>
@@ -47,8 +53,45 @@
 				</s:if>
 			</div>
 	        <div class="blogshow" style="background:#fff">
-	           <h1><s:property value="artModel.title"/></h1>
+	           <h1 class="articleComp"><s:property value="artModel.title"/></h1>
+	           <p class="articleComp">
+	              <span>作者：<s:property value="artModel.editor"/></span> 
+	              <span>时间：<s:property value="artModel.time"/></span> 
+	              <span>关键字:<s:property value="artModel.keyword"/></span>
+	           </p>
+	           <p class="articleComp">
+	              <span>浏览:<s:property value="artModel.viewCount"/></span> 
+	              <span>评论:<s:property value="artModel.critiqueSize"/></span> 
+	              <span>类别:<s:property value="artModel.articleType"/></span> 
+	           </p>
 	           <s:property value="artModel.content" escape="false"/>
+	           <!-- 评论区 -->
+	           <div class="crtqArea">
+					<form action="" method="post">
+						<div>
+							<p>评论：</p>
+							<textarea id="critique" rows="10" cols="70"></textarea>
+						</div>
+						<div>
+						   <label for="crtq-name">您的姓名：</label><input id="crtq-name" name="critiquer"><span class="hint" style="color:red">*必填</span>
+						</div>
+						<div>
+						   <label for="crtq-email">您的邮箱：</label><input id="crtq-email" name="email"><span class="hint" style="color:red">*必填</span>
+						</div>
+						<div>
+						   <label for="crtq-prvtpage">您的个人主页：</label><input id="crtq-prvtpage" name="prvtpage"><span class="hint">如有</span>
+						</div>
+						<div>
+						   <label for="crtq-rmbme">记住个人信息：</label><input id="crtq-rmbme" name="rmbme" type="checkbox">
+						</div>
+						<div><input type="submit" value="提交" style="width:50px"></div>						
+					</form>
+				</div>
+				 <!-- 评论 列表-->
+				<div class="crtqList">
+				     
+				
+				</div>
 	        </div>
 	   </div>
 	   <aside> 
