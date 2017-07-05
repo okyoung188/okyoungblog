@@ -8,7 +8,7 @@ public class CritiqueModel {
 	private int id;
 	private int articleId;
 	private String content;
-	private User user;
+	private String user;
 	private Date time;
 	private String detail;
 	public int getId() {
@@ -29,10 +29,10 @@ public class CritiqueModel {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public User getUser() {
+	public String getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 	public Date getTime() {

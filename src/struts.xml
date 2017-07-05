@@ -48,6 +48,11 @@
 	    <action name="blogshow" class="blogShowAction">
 	       <result name="success">/WEB-INF/jsp/blogdetail.jsp</result>
 	    </action>
+	    
+	     <action name="critique*" method="{1}" class="critiqueAction">
+	       <result name="success" type="json"><param name="root">critiqueModel</param></result>
+	       <result name="error" type="json"><param name="root">message</param></result>
+	    </action>
 	</package>
 	
 
