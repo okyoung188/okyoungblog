@@ -16,11 +16,12 @@
 <style>
 .blogsection > div {margin:20px 0;}
 .articleComp{text-align:center;margin:20px auto}
-h1{padding-top:20px}
+.blogshow{padding:25px}
 .crtqArea{margin-top:100px}
 form>div{margin:10px 35px}
 .hint{font-size:12px;color:#a6a6a6}
-
+.sectionSeparate{font-size:18px;border-bottom:1px solid #C9C9C9}
+ul{list-style:none}
 </style>
 </head>
 <body>
@@ -67,30 +68,45 @@ form>div{margin:10px 35px}
 	           <s:property value="artModel.content" escape="false"/>
 	           <!-- 评论区 -->
 	           <div class="crtqArea">
-					<form action="" method="post">
+	                <p class="sectionSeparate">评论区</p>
+					<form action="critiqueadd.action" method="post">
 						<div>
 							<p>评论：</p>
 							<textarea id="critique" rows="10" cols="70"></textarea>
 						</div>
 						<div>
-						   <label for="crtq-name">您的姓名：</label><input id="crtq-name" name="critiquer"><span class="hint" style="color:red">*必填</span>
+						   <label for="crtq-name">您的昵称：</label><input id="crtq-name" name="nickname"><span class="hint" style="color:red">*必填</span>
 						</div>
 						<div>
 						   <label for="crtq-email">您的邮箱：</label><input id="crtq-email" name="email"><span class="hint" style="color:red">*必填</span>
 						</div>
 						<div>
-						   <label for="crtq-prvtpage">您的个人主页：</label><input id="crtq-prvtpage" name="prvtpage"><span class="hint">如有</span>
+						   <label for="crtq-prvtpage">您的个人主页：</label><input id="crtq-prvtpage" name="personalPage"><span class="hint">如有</span>
 						</div>
 						<div>
-						   <label for="crtq-rmbme">记住个人信息：</label><input id="crtq-rmbme" name="rmbme" type="checkbox">
+						   <label for="crtq-rmbme">记住个人信息：</label><input id="crtq-rmbme" name="rememberInfo" type="checkbox">
 						</div>
 						<div><input type="submit" value="提交" style="width:50px"></div>				
 					</form>
 				</div>
 				 <!-- 评论 列表-->
 				<div class="crtqList">
-				     
-				
+				   <p class="sectionSeparate">评论列表</p>
+				   <ul>
+				      <s:iterator value="critiqueList" var="critique">
+							<li>
+								<p>
+									<s:property value="#critique.nickname" />	：
+								</p>
+								<p>
+									<s:property value="#critique.content" />
+								</p>
+								<p>
+									<span style="float: right"><s:property value="#critique.time" /></span>
+								</p>
+							</li>
+						</s:iterator>
+				   </ul>
 				</div>
 	        </div>
 	   </div>

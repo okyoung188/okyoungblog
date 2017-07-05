@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.okyoung.dao.BaseDao;
 import com.okyoung.entity.Critique;
+import com.okyoung.entity.User;
 import com.okyoung.pagemodel.CritiqueModel;
 import com.okyoung.service.CritiqueService;
 
@@ -58,14 +59,20 @@ public class CritiqueServiceImpl implements CritiqueService {
 		if(id > 0){
 			String hql = "from Critique c where article_id=:article_id order by c.time desc";
 			Map<String,Object> paramMap = new HashMap<String,Object>();
-			paramMap.put("article_id", id);
-			List<Critique> critiqueList = baseDao.find(hql);
+			paramMap.put("article_id", Integer.valueOf(id));
+			List<Critique> critiqueList = baseDao.find(hql,paramMap);
 			if (critiqueList != null && critiqueList.size() > 0){
 				modelList = new ArrayList<CritiqueModel>();
 				CritiqueModel model = null;
+				User user = null;
 				for (Critique crt: critiqueList){
 					model = new CritiqueModel();
 					BeanUtils.copyProperties(model, crt);
+					user = crt.getUser();
+					if (user != null){
+						String nickname = user.getNickname();
+						model.setNickname(nickname);
+					}
 					modelList.add(model);
 				}
 			}		

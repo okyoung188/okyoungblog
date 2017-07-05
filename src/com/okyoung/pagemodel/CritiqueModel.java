@@ -7,10 +7,20 @@ import com.okyoung.entity.User;
 public class CritiqueModel {
 	private int id;
 	private int articleId;
-	private String content;
-	private String user;
+	private int userId;
 	private Date time;
 	private String detail;
+	private String content;
+	private String nickname;
+	private String email;
+	private String personalPage;
+	private boolean rememberInfo;
+
+	
+	public CritiqueModel(){
+		time = new Date();
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -29,15 +39,48 @@ public class CritiqueModel {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getUser() {
-		return user;
-	}
-	public void setUser(String user) {
-		this.user = user;
-	}
 	public Date getTime() {
 		return time;
 	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPersonalPage() {
+		return personalPage;
+	}
+
+	public void setPersonalPage(String personalPage) {
+		this.personalPage = personalPage;
+	}
+
+	public boolean isRememberInfo() {
+		return rememberInfo;
+	}
+
+	public void setRememberInfo(boolean rememberInfo) {
+		this.rememberInfo = rememberInfo;
+	}
+
 	public void setTime(Date time) {
 		this.time = time;
 	}
@@ -46,6 +89,15 @@ public class CritiqueModel {
 	}
 	public void setDetail(String detail) {
 		this.detail = detail;
+	}
+
+	@Override
+	public String toString() {
+		return "CritiqueModel [id=" + id + ", articleId=" + articleId
+				+ ", userId=" + userId + ", time=" + time + ", detail="
+				+ detail + ", content=" + content + ", nickname=" + nickname
+				+ ", email=" + email + ", personalPage=" + personalPage
+				+ ", rememberInfo=" + rememberInfo + "]";
 	}
 	
 	

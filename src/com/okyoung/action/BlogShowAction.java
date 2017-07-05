@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -13,6 +14,7 @@ import com.okyoung.service.ArticleService;
 import com.okyoung.service.CritiqueService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.opensymphony.xwork2.util.ValueStack;
 
 @Controller
 @Scope("prototype")
@@ -52,6 +54,7 @@ public class BlogShowAction extends ActionSupport implements ModelDriven<Article
 		if (id > 0) {
 			artModel = articleService.queryById(id);
 			critiqueList = critiqueService.queryByArtId(id);
+			ValueStack stack = ServletActionContext.getContext().getValueStack();
 			return SUCCESS;
 		} else{
 			return ERROR;

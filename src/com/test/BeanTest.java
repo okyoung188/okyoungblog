@@ -11,10 +11,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.okyoung.action.BlogListAction;
+import com.okyoung.entity.Critique;
 import com.okyoung.pagemodel.ArticleModel;
+import com.okyoung.pagemodel.CritiqueModel;
 import com.okyoung.pagemodel.Menu;
 import com.okyoung.pagemodel.PageBean;
 import com.okyoung.service.ArticleService;
+import com.okyoung.service.CritiqueService;
 import com.okyoung.service.impl.ArticleServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -55,6 +58,17 @@ public class BeanTest {
 	public void testAction() throws Exception{
 		BlogListAction action = (BlogListAction) context.getBean("blogListAction");
 		action.execute();
+	}
+	
+	@Test
+	public void testBlogShow() throws Exception{
+		CritiqueService service = (CritiqueService) context.getBean("critiqueServiceImpl");
+		List<CritiqueModel> critiqueList = service.queryByArtId(2);
+		for (CritiqueModel model:critiqueList){
+		    System.out.println(model.getNickname());	
+		    System.out.println(model.getContent());
+		    System.out.println(model.getTime());
+		}
 	}
 	
 
