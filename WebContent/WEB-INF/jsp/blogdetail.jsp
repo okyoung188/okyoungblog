@@ -84,7 +84,7 @@ form>div{margin:10px 35px}
 						<div>
 						   <label for="crtq-rmbme">记住个人信息：</label><input id="crtq-rmbme" name="rmbme" type="checkbox">
 						</div>
-						<div><input type="submit" value="提交" style="width:50px"></div>						
+						<div><input type="submit" value="提交" style="width:50px"></div>				
 					</form>
 				</div>
 				 <!-- 评论 列表-->
