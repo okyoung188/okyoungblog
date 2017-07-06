@@ -54,7 +54,6 @@ public class BlogShowAction extends ActionSupport implements ModelDriven<Article
 		if (id > 0) {
 			artModel = articleService.queryById(id);
 			critiqueList = critiqueService.queryByArtId(id);
-			ValueStack stack = ServletActionContext.getContext().getValueStack();
 			return SUCCESS;
 		} else{
 			return ERROR;

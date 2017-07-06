@@ -43,14 +43,14 @@ public class CritiqueAction implements ModelDriven<CritiqueModel>{
 	}
 
 	public String add() throws Exception{
+		message = new Message();
 	    if (critiqueModel.getArticleId() > 0){
 	    	critiqueService.add(critiqueModel);
-	    	return "success";
+	        message.setMessage("添加评论成功！");
 	    } else {
-	        message = new Message();
 	        message.setMessage("ArticleId 不合法！请检查！");
-	    	return "fail";
-	    }	    
+	    }	
+	    return "success";
 	}
 	
 	

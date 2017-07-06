@@ -1,6 +1,8 @@
 package com.okyoung.entity;
 
 import java.io.Serializable;
+
+
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -57,7 +59,7 @@ public class Critique implements Serializable{
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_id",nullable=true)
 	public User getUser() {
 		return user;
 	}

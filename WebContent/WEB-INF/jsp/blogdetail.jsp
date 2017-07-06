@@ -17,11 +17,13 @@
 .blogsection > div {margin:20px 0;}
 .articleComp{text-align:center;margin:20px auto}
 .blogshow{padding:25px}
-.crtqArea{margin-top:100px}
+.crtqArea,.crtqList{margin-top:100px}
 form>div{margin:10px 35px}
 .hint{font-size:12px;color:#a6a6a6}
 .sectionSeparate{font-size:18px;border-bottom:1px solid #C9C9C9}
-ul{list-style:none}
+ul{list-style:none;width:90%;margin:auto;}
+ul li{margin-top:15px;border-bottom:1px dashed #c9c9c9;}
+.crtqcontent{width:95%;min-height:120px;margin:auto;text-indent:50px}
 </style>
 </head>
 <body>
@@ -69,7 +71,8 @@ ul{list-style:none}
 	           <!-- 评论区 -->
 	           <div class="crtqArea">
 	                <p class="sectionSeparate">评论区</p>
-					<form action="critiqueadd.action" method="post">
+					<form id="critiqueform">
+					    <input id="articleId" name="articleId" hidden="hidden" value="<s:property value="artModel.id"/>">
 						<div>
 							<p>评论：</p>
 							<textarea id="critique" rows="10" cols="70"></textarea>
@@ -83,10 +86,10 @@ ul{list-style:none}
 						<div>
 						   <label for="crtq-prvtpage">您的个人主页：</label><input id="crtq-prvtpage" name="personalPage"><span class="hint">如有</span>
 						</div>
-						<div>
+						<div>	
 						   <label for="crtq-rmbme">记住个人信息：</label><input id="crtq-rmbme" name="rememberInfo" type="checkbox">
 						</div>
-						<div><input type="submit" value="提交" style="width:50px"></div>				
+						<div><input id="addcritique" type="button" value="提交" style="width:50px"></div>				
 					</form>
 				</div>
 				 <!-- 评论 列表-->
@@ -95,14 +98,15 @@ ul{list-style:none}
 				   <ul>
 				      <s:iterator value="critiqueList" var="critique">
 							<li>
-								<p>
+								<p class="crtqnickname" style="padding-left:20px">
 									<s:property value="#critique.nickname" />	：
 								</p>
-								<p>
+								<p class="crtqcontent">
 									<s:property value="#critique.content" />
 								</p>
-								<p>
-									<span style="float: right"><s:property value="#critique.time" /></span>
+								<p></p>
+								<p class="crtqtime">
+									<span>&nbsp;</span><span style="float: right;margin-right:40px"><s:property value="#critique.time" /></span>
 								</p>
 							</li>
 						</s:iterator>
@@ -122,5 +126,45 @@ ul{list-style:none}
 	<div id="tbox">
 		<a id="togbook" href="/e/tool/gbook/?bid=1"></a> <a id="gotop" href="javascript:void(0)"></a>
 	</div>
+	<script type="text/javascript">
+	    $('#addcritique').on('click',function(){
+	    	var articleId = $('#articleId').val();
+	    	var content = $('#critique').val();
+	    	var nickname = $('#crtq-name').val();
+	    	var email = $('#crtq-email').val();
+	    	var personalPage = $('#crtq-prvtpage').val();
+	    	var rmbme = $('#crtq-rmbme').val();
+	    	if(!articleId){
+	    		alert('文章Id不合法！');
+	    		return;
+	    	}
+	    	if(!content){
+	    		alert('评论不能为空！');
+	    		return;
+	    	}
+	    	if(!nickname){
+	    		alert('昵称不能为空！');
+	    		return;
+	    	}
+	    	$.post('critiqueadd.action',{
+		    	articleId:articleId,
+		    	content:content,
+		    	nickname:nickname,
+		    	email:email,
+		    	personalPage:personalPage,
+		    	rememberInfo:rmbme	    	
+		    },function(data){
+		    	if(data.success){
+		    		var r = confirm('添加成功！');
+		    		if(r){
+		    			window.location.reload(); 
+		    		}
+		    	} else {
+		    		confirm(data.message);
+		    	}
+		    },'json');
+	    })
+	
+	</script>
 </body>
 </html>

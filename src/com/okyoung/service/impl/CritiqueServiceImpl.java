@@ -1,6 +1,7 @@
 package com.okyoung.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.okyoung.dao.BaseDao;
+import com.okyoung.dao.impl.ArticleDaoImpl;
+import com.okyoung.entity.Article;
 import com.okyoung.entity.Critique;
 import com.okyoung.entity.User;
 import com.okyoung.pagemodel.CritiqueModel;
@@ -21,6 +24,9 @@ public class CritiqueServiceImpl implements CritiqueService {
 	
 	@Resource
 	BaseDao<Critique> baseDao;
+	
+	@Resource
+	ArticleDaoImpl articleDao;
 
 	@Override
 	public List<CritiqueModel> queryAll() throws Exception {
@@ -95,15 +101,35 @@ public class CritiqueServiceImpl implements CritiqueService {
 			Critique critique = new Critique();
 			BeanUtils.copyProperties(critique, model);
 			baseDao.saveOrUpdate(critique);
-		}		
+		}
 	}
 
 	@Override
 	public void add(CritiqueModel model) throws Exception {
 		if (model != null){
-			Critique critique = new Critique();
-			BeanUtils.copyProperties(critique, model);
-			baseDao.save(critique);
+			int articleId = model.getArticleId();
+			if (articleId > 0){
+				String hql = "from Article a where a.id=:id";
+				Map<String,Object> param = new HashMap<String,Object>();
+				param.put("id", articleId);
+				Article article = articleDao.get(hql, param);
+				if (article != null){
+					Critique critique = new Critique();	
+					BeanUtils.copyProperties(critique, model);
+					if(model.isRememberInfo()){
+						User user = new User();
+						String nickname = model.getNickname();
+						String email = model.getEmail();
+						user.setEmail(email);
+						user.setNickname(nickname);
+						critique.setUser(user);
+					}
+					critique.setTime(new Date());
+					System.out.println(critique.getTime());
+					critique.setArticle(article);
+					baseDao.save(critique);
+				}
+			}
 		}
 	}
 
