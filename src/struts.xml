@@ -29,11 +29,12 @@
 	<constant name="struts.dispatcher.parametersWorkaround" value="false" />
 
 	<package name="basePackage" namespace="/" extends="json-default">
-	    
+	
 	    <global-results>
 	         <result name="error">/WEB-INF/jsp/error.jsp</result>	
 	         <result name="mainpage">/WEB-INF/jsp/main.jsp</result> 
 	    </global-results>
+	    
 	    <action name="main">
 	        <result name="success">/WEB-INF/jsp/main.jsp</result>
 	    </action>
@@ -51,12 +52,37 @@
 	    
 	     <action name="critique*" method="{1}" class="critiqueAction">
 	       <result name="success" type="json"><param name="root">critiqueModel</param></result>
-	       <result name="error" type="json"><param name="root">message</param></result>
+	       <result name="fail" type="json"><param name="root">message</param></result>
 	    </action>
 	    
+	</package>
+	
+	<package name="managePackage" namespace="/manage" extends="json-default">
+	    
+	    <interceptors>
+		     <interceptor-stack name="myStack">
+		      	<interceptor-ref name="defaultStack"></interceptor-ref>
+			    <interceptor-ref name="loginInterceptor"></interceptor-ref>
+		     </interceptor-stack>
+		     <interceptor name="loginInterceptor" class="loginInterceptor"></interceptor>
+	    </interceptors>
+	    
+	    <global-results>
+	         <result name="error">/WEB-INF/jsp/error.jsp</result>
+	         <result name="login">/WEB-INF/jsp/login.jsp</result>
+	    </global-results>
+		    
 	    <action name="login" class="loginAction">
 	       <result name="success">/WEB-INF/jsp/manage.jsp</result>
 	    </action>
+	    	    
+	    <action name="manage" class="manageAction">
+	       <interceptor-ref name="myStack"></interceptor-ref>
+	       <result name="success">/WEB-INF/jsp/manage.jsp</result>
+<!-- 	       <result name="login">/WEB-INF/jsp/login.jsp</result> -->
+	    </action>
+	
+	
 	</package>
 	
 

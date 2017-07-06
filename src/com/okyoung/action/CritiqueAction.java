@@ -2,6 +2,7 @@ package com.okyoung.action;
 
 import javax.annotation.Resource;
 
+import org.junit.internal.runners.statements.Fail;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -48,7 +49,7 @@ public class CritiqueAction implements ModelDriven<CritiqueModel>{
 	    } else {
 	        message = new Message();
 	        message.setMessage("ArticleId 不合法！请检查！");
-	    	return "error";
+	    	return "fail";
 	    }	    
 	}
 	
