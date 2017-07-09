@@ -71,5 +71,17 @@ public class BeanTest {
 		}
 	}
 	
+	@Test
+	public void testAddCritique() throws Exception{
+		CritiqueModel model = new CritiqueModel();
+		model.setContent("aaaaaaaaaaa");
+		model.setArticleId(2);
+		model.setEmail("111@123.com");
+		model.setNickname("hhhhh");
+		model.setRememberInfo(true);
+		CritiqueService service = (CritiqueService) context.getBean("critiqueServiceImpl");
+		service.add(model);
+	}
+	
 
 }

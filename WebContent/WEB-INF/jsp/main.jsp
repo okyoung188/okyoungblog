@@ -7,6 +7,7 @@
 <title>博客主页</title>
 <meta name="keywords" content="黑色模板,个人网站模板,个人博客模板,博客模板,css3,html5,网站模板" />
 <meta name="description" content="这是一个有关黑色时间轴的css3 html5 网站模板" />
+<link href="http://cdn.bootcss.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/animation.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/css/lrtk.css" rel="stylesheet" />
@@ -15,6 +16,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/page.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jqPaginator.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
 <style>
 .pageDiv{font:14px "微软雅黑", "Microsoft Yahei";text-align:center;width:100%;height:50px;padding:10px 10px;background-color:#D6D6D6}
 .pageDiv div{float:left;line-height:25px}
@@ -24,6 +26,9 @@
 .pageDiv>span{float:left;dispaly:inline-block;width:70px;height:25px;margin-left:5px;background:#f0f0f0;line-height:25px}
 .pageButtons a{float:left;dispaly:inline-block;width:45px;height:25px;backrgound:#f0f0f0}
 .pageDiv a:hover{background-color:#e0e0e0}
+#menubar{height:50px;width:95%;margin:auto;text-align:center;background:#fff}
+.dropdown{display:inline-block}
+.dropdown:hover .dropdown-menu{display:block}
 </style>
 <!--[if lt IE 9]>
 <script src="js/modernizr.js"></script>
@@ -46,6 +51,18 @@
 	</header>
 	<!--header end-->
 	<div id="mainbody">
+	<nav id="menubar">
+		<div class="dropdown">
+			<a class="category" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a tabindex="-1" href="#">Action</a></li>
+				<li><a tabindex="-1" href="#">Another action</a></li>
+				<li><a tabindex="-1" href="#">Something else here</a></li>
+				<li class="divider"></li>
+				<li><a tabindex="-1" href="#">Separated link</a></li>
+			</ul>
+		</div>
+	</nav>
 		<div class="blogs">
 			<ul class="bloglist">
 				<li style="border-right: 0px;">

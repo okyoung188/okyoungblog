@@ -27,6 +27,9 @@ public class CritiqueServiceImpl implements CritiqueService {
 	
 	@Resource
 	ArticleDaoImpl articleDao;
+	
+	@Resource
+	BaseDao<User> userDao;
 
 	@Override
 	public List<CritiqueModel> queryAll() throws Exception {
@@ -117,15 +120,21 @@ public class CritiqueServiceImpl implements CritiqueService {
 					Critique critique = new Critique();	
 					BeanUtils.copyProperties(critique, model);
 					if(model.isRememberInfo()){
-						User user = new User();
+						String hqlUser = "from User u where u.nickname like :nickname and u.email like :email";
+						Map<String, Object> paramUser = new HashMap<String,Object>();
 						String nickname = model.getNickname();
 						String email = model.getEmail();
-						user.setEmail(email);
-						user.setNickname(nickname);
+						paramUser.put("nickname", nickname);
+						paramUser.put("email", email);
+						User user = userDao.get(hqlUser, paramUser);//不能直接存，存之前需要查询一下
+						if(user == null){
+							user = new User();
+							user.setEmail(email);
+							user.setNickname(nickname);
+						}	
 						critique.setUser(user);
 					}
 					critique.setTime(new Date());
-					System.out.println(critique.getTime());
 					critique.setArticle(article);
 					baseDao.save(critique);
 				}

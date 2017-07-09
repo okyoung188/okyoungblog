@@ -13,21 +13,22 @@ import com.okyoung.entity.Critique;
  */
 public class ArticleModel {
 	
+	private int pageNum = 1;
+	private int pageSize = 10;
 	private int id;// two way
 	private String title;// two way
+	private String keyword;// two way
+	private String articleType;// two way
+	private String ctgName;// two way
 	private String content;
 	private String indeximg;
 	private String editor;
-	private String keyword;// two way
 	private Date time;
 	private Integer viewCount;
 	private String detail;
 	private int critiqueSize;
-	private String articleType;// two way
-	private String ctgName;
-	private int pageNum = 1;
-	private int pageSize = 10;
 	private long pageTotal;
+	
 	//需要remove content中的html标签时为true,default false
 	private boolean rmHtml=false;
 	

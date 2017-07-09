@@ -33,7 +33,7 @@ public class LoginAction extends ActionSupport implements ModelDriven<Manager>{
 			ServletActionContext.getRequest().setAttribute("message", "用户名或密码不能为空！");
 			return LOGIN;
 		}
-		boolean result = managerService.validate(username, pwd);
+		boolean result = managerService.validate(username.trim(), pwd);
 		if (result){
 			ServletActionContext.getRequest().getSession().setAttribute("username", username);
 			return SUCCESS;

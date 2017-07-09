@@ -1,6 +1,7 @@
 package com.okyoung.pagemodel;
 
 import java.util.Date;
+import java.util.UUID;
 
 import com.okyoung.entity.User;
 
@@ -19,6 +20,7 @@ public class CritiqueModel {
 	
 	public CritiqueModel(){
 		time = new Date();
+		nickname= "无名氏";
 	}
 	
 	public int getId() {

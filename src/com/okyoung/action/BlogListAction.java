@@ -40,6 +40,7 @@ public class BlogListAction extends ActionSupport implements ModelDriven<Article
 	
 	@Override
 	public ArticleModel getModel() {
+
 		return articleWithParam;
 	}
 

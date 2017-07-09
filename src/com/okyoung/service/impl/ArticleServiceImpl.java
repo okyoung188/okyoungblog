@@ -151,10 +151,11 @@ public class ArticleServiceImpl implements ArticleService {
 			String hql = " from Article a where a.id=:id";
 			Map<String,Object> paramMap = new HashMap<String,Object>();
 			paramMap.put("id", id);
-			List<Article> articles = baseDao.find(hql, paramMap);
-			if (articles != null && articles.size() > 0){
+			Article article = baseDao.get(hql, paramMap);
+			if (article != null){
+				article.setViewCount(article.getViewCount() + 1);
+				baseDao.save(article);
 				articleModel = new ArticleModel();
-				Article article = articles.get(0);
 				BeanUtils.copyProperties(articleModel, article);
 				articleModel.setIndeximg(article.getIndeximg());
 				int critiqueSize = article.getCritiques().size();

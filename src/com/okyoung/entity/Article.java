@@ -18,7 +18,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.DynamicInsert;
+
 @Entity
+@DynamicInsert(true)
 @Table(name = "article", schema = "okyoungblog")
 public class Article implements Serializable{
 
@@ -110,7 +113,7 @@ public class Article implements Serializable{
 		this.time = time;
 	}
 
-	@Column(name = "viewcount",nullable=true)
+	@Column(name = "viewcount",nullable=false,columnDefinition="default 0")
 	public Integer getViewCount() {
 		return viewCount;
 	}

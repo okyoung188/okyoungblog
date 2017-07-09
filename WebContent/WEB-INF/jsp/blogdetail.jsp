@@ -21,8 +21,8 @@
 form>div{margin:10px 35px}
 .hint{font-size:12px;color:#a6a6a6}
 .sectionSeparate{font-size:18px;border-bottom:1px solid #C9C9C9}
-ul{list-style:none;width:90%;margin:auto;}
-ul li{margin-top:15px;border-bottom:1px dashed #c9c9c9;}
+.crtqList ul{list-style:none;width:90%;margin:auto;}
+.crtqList ul li{margin-top:15px;border-bottom:1px dashed #c9c9c9;}
 .crtqcontent{width:95%;min-height:120px;margin:auto;text-indent:50px}
 </style>
 </head>
@@ -126,15 +126,15 @@ ul li{margin-top:15px;border-bottom:1px dashed #c9c9c9;}
 	<div id="tbox">
 		<a id="togbook" href="/e/tool/gbook/?bid=1"></a> <a id="gotop" href="javascript:void(0)"></a>
 	</div>
-	<script type="text/javascript">
+	<script language="javascript">
 	    $('#addcritique').on('click',function(){
 	    	var articleId = $('#articleId').val();
 	    	var content = $('#critique').val();
 	    	var nickname = $('#crtq-name').val();
 	    	var email = $('#crtq-email').val();
 	    	var personalPage = $('#crtq-prvtpage').val();
-	    	var rmbme = $('#crtq-rmbme').val();
-	    	if(!articleId){
+	    	var rmbme = $('#crtq-rmbme').prop('checked')?true:false;
+	        if(!articleId){
 	    		alert('文章Id不合法！');
 	    		return;
 	    	}
@@ -146,6 +146,7 @@ ul li{margin-top:15px;border-bottom:1px dashed #c9c9c9;}
 	    		alert('昵称不能为空！');
 	    		return;
 	    	}
+	    	
 	    	$.post('critiqueadd.action',{
 		    	articleId:articleId,
 		    	content:content,
@@ -155,15 +156,15 @@ ul li{margin-top:15px;border-bottom:1px dashed #c9c9c9;}
 		    	rememberInfo:rmbme	    	
 		    },function(data){
 		    	if(data.success){
-		    		var r = confirm('添加成功！');
-		    		if(r){
+		    		var r = confirm(data.message);
+		    		if(r==true){
 		    			window.location.reload(); 
 		    		}
 		    	} else {
 		    		confirm(data.message);
 		    	}
 		    },'json');
-	    })
+	    });
 	
 	</script>
 </body>

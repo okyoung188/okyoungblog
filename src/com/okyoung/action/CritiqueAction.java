@@ -44,12 +44,27 @@ public class CritiqueAction implements ModelDriven<CritiqueModel>{
 
 	public String add() throws Exception{
 		message = new Message();
-	    if (critiqueModel.getArticleId() > 0){
-	    	critiqueService.add(critiqueModel);
-	        message.setMessage("添加评论成功！");
-	    } else {
-	        message.setMessage("ArticleId 不合法！请检查！");
-	    }	
+		if(critiqueModel.getArticleId() <=0){
+			message.setMessage("ArticleId 不合法！请检查！");
+			return "success";
+		}
+		if(critiqueModel.getContent() == null){
+	    	message.setMessage("评论不能为空！");
+	    	return "success";
+	    }
+		if(critiqueModel.getEmail() == null){
+			message.setMessage("邮箱不能为空！");
+	    	return "success";
+		}
+		if(critiqueModel.getNickname() == null){
+			message.setMessage("昵称不能为空！");
+			return "success";
+		}
+	
+	    critiqueService.add(critiqueModel);
+	    message.setSuccess(true);
+	    message.setMessage("添加评论成功！");
+	  
 	    return "success";
 	}
 	
