@@ -27,8 +27,11 @@
 .pageButtons a{float:left;dispaly:inline-block;width:45px;height:25px;backrgound:#f0f0f0}
 .pageDiv a:hover{background-color:#e0e0e0}
 #menubar{height:50px;width:95%;margin:auto;text-align:center;background:#fff}
-.dropdown{display:inline-block}
-.dropdown:hover .dropdown-menu{display:block}
+.dropdown{display:inline-block;border-right:1px solid #cac7c4;padding:0 10px}
+.dropdown-toggle{line-height:50px}
+.caret{vertical-align:baseline}
+.dropdown:hover{background:#4fb8de}
+.dropdown:hover .dropdown-menu{display:block;margin:0px}
 </style>
 <!--[if lt IE 9]>
 <script src="js/modernizr.js"></script>
@@ -53,7 +56,37 @@
 	<div id="mainbody">
 	<nav id="menubar">
 		<div class="dropdown">
-			<a class="category" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
+			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a tabindex="-1" href="#">Action</a></li>
+				<li><a tabindex="-1" href="#">Another action</a></li>
+				<li><a tabindex="-1" href="#">Something else here</a></li>
+				<li class="divider"></li>
+				<li><a tabindex="-1" href="#">Separated link</a></li>
+			</ul>
+		</div>
+		<div class="dropdown">
+			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a tabindex="-1" href="#">Action</a></li>
+				<li><a tabindex="-1" href="#">Another action</a></li>
+				<li><a tabindex="-1" href="#">Something else here</a></li>
+				<li class="divider"></li>
+				<li><a tabindex="-1" href="#">Separated link</a></li>
+			</ul>
+		</div>
+		<div class="dropdown">
+			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a tabindex="-1" href="#">Action</a></li>
+				<li><a tabindex="-1" href="#">Another action</a></li>
+				<li><a tabindex="-1" href="#">Something else here</a></li>
+				<li class="divider"></li>
+				<li><a tabindex="-1" href="#">Separated link</a></li>
+			</ul>
+		</div>
+		<div class="dropdown">
+			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
 			<ul class="dropdown-menu" role="menu">
 				<li><a tabindex="-1" href="#">Action</a></li>
 				<li><a tabindex="-1" href="#">Another action</a></li>
