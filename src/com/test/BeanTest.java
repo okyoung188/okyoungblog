@@ -53,6 +53,13 @@ public class BeanTest {
 		System.out.println(a);
 	}
 	
+	@Test
+	public void testCountAll() throws Exception{
+		ArticleService service = (ArticleService) context.getBean("articleService");
+		long size = service.countAll();
+		System.out.println(size);
+	}
+	
 	
 	@Test
 	public void testAction() throws Exception{

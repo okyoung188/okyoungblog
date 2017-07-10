@@ -1,5 +1,6 @@
 package com.okyoung.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +74,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public PageBean<ArticleModel> listByCtg(String param, int pageNum, int pageSize) throws Exception {
+	public PageBean<ArticleModel> listByCtg(String param, int pageNum, int pageSize) throws Exception{
 		PageBean<ArticleModel> pageBean = new PageBean<ArticleModel>();
 		List<ArticleModel> articleModels = null;
 		if (pageNum > 0 && pageSize > 0 && param != null && !param.trim().equals("")){
@@ -193,7 +194,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public long countAll() throws Exception {
+	public long countAll() {
 		String hql = "select count(*) from Article a";
 		return baseDao.count(hql);
 	}

@@ -27,7 +27,7 @@
 .pageButtons a{float:left;dispaly:inline-block;width:45px;height:25px;backrgound:#f0f0f0}
 .pageDiv a:hover{background-color:#e0e0e0}
 #menubar{height:50px;width:95%;margin:auto;text-align:center;background:#fff}
-.dropdown{display:inline-block;border-right:1px solid #cac7c4;padding:0 10px}
+.dropdown{display:inline-block;border-right:1px solid #cac7c4;width:80px;padding:0 10px}
 .dropdown-toggle{line-height:50px}
 .caret{vertical-align:baseline}
 .dropdown:hover{background:#4fb8de}
@@ -55,7 +55,18 @@
 	<!--header end-->
 	<div id="mainbody">
 	<nav id="menubar">
-		<div class="dropdown">
+	    <s:iterator value="menu.subMenu" var="parent">
+	      <div class="dropdown">
+			  <a class="dropdown-toggle" href="?<s:property value="#parent.reqType"/>=<s:property value="#parent.reqData"/>" data-toggle="dropdown"><s:property value="#parent.name"/></a>
+			  <ul class="dropdown-menu" role="menu">
+			      <s:iterator value="#parent.subMenu" var="sub"> 
+			        <li><a tabindex="-1" href="?<s:property value="#sub.reqType"/>=<s:property value="#sub.reqData"/>"><s:property value="#sub.name"/></a></li>
+			      </s:iterator>
+			  </ul>
+		  </div>
+	    </s:iterator>
+		
+		<!-- <div class="dropdown">
 			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
 			<ul class="dropdown-menu" role="menu">
 				<li><a tabindex="-1" href="#">Action</a></li>
@@ -84,17 +95,7 @@
 				<li class="divider"></li>
 				<li><a tabindex="-1" href="#">Separated link</a></li>
 			</ul>
-		</div>
-		<div class="dropdown">
-			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
-			<ul class="dropdown-menu" role="menu">
-				<li><a tabindex="-1" href="#">Action</a></li>
-				<li><a tabindex="-1" href="#">Another action</a></li>
-				<li><a tabindex="-1" href="#">Something else here</a></li>
-				<li class="divider"></li>
-				<li><a tabindex="-1" href="#">Separated link</a></li>
-			</ul>
-		</div>
+		</div> -->
 	</nav>
 		<div class="blogs">
 			<ul class="bloglist">

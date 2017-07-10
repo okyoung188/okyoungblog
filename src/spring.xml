@@ -73,7 +73,7 @@
 			<tx:method name="search*" propagation="SUPPORTS" />
 			<tx:method name="datagrid*" propagation="SUPPORTS" />
 
-			<tx:method name="*" propagation="SUPPORTS" />
+			<tx:method name="*" propagation="SUPPORTS"/>	
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
