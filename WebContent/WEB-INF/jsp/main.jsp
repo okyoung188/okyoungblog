@@ -1,3 +1,4 @@
+<%@page import="org.apache.struts2.ServletActionContext"%>
 <%@page contentType="text/html; charset=utf-8" pageEncoding="utf-8" language="java"%>
 <%@taglib uri="/struts-tags" prefix="s"%>
 <!doctype html>
@@ -18,7 +19,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jqPaginator.min.js"></script>
 <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
 <style>
-.pageDiv{font:14px "微软雅黑", "Microsoft Yahei";text-align:center;width:100%;height:50px;padding:10px 10px;background-color:#D6D6D6}
+.pageDiv{font:14px "微软雅黑", "Microsoft Yahei";text-align:center;height:40px;padding-top:10px;background-color:#D6D6D6}
 .pageDiv div{float:left;line-height:25px}
 .pageDiv a {float:left;dispaly:inline-block;width:70px;height:25px;margin-left:5px;background:#f0f0f0;line-height:25px}
 .pageDiv a.focusedPage{background-color:red}
@@ -32,6 +33,7 @@
 .caret{vertical-align:baseline}
 .dropdown:hover{background:#4fb8de}
 .dropdown:hover .dropdown-menu{display:block;margin:0px}
+#bloglist, #bloglist ul{margin:0}
 </style>
 <!--[if lt IE 9]>
 <script src="js/modernizr.js"></script>
@@ -43,7 +45,27 @@
 			<ul>
 				<li><a href="${pageContext.request.contextPath}">网站首页</a></li>
 				<li><a href="${pageContext.request.contextPath}/main">主页</a></li>
-				<li><a href="${pageContext.request.contextPath}/download/" target="_blank" title="博客文章">博客文章</a></li>
+				<li>
+					<div class="dropdown">
+						<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> 博客文章 </a>
+						<ul class="dropdown-menu" role="menu">
+							<li>
+								<nav id="menubar">
+									<s:iterator value="menu.subMenu" var="parent">
+										<div class="dropdown">
+											<a class="dropdown-toggle" href="?<s:property value="#parent.reqType"/>=<s:property value="#parent.reqData"/>" data-toggle="dropdown"><s:property value="#parent.name" /></a>
+											<ul class="dropdown-menu" role="menu">
+												<s:iterator value="#parent.subMenu" var="sub">
+													<li><a tabindex="-1" href="?<s:property value="#sub.reqType"/>=<s:property value="#sub.reqData"/>"><s:property value="#sub.name" /></a></li>
+												</s:iterator>
+											</ul>
+										</div>
+									</s:iterator>
+								</nav>
+						   </li>
+						</ul>
+					</div>
+				</li>
 				<li><a href="${pageContext.request.contextPath}/book/" target="_blank" title="图书推荐">图书推荐</a></li>
 				<li><a href="${pageContext.request.contextPath}/newshtml5/" target="_blank" title="HTML5 / CSS3">站外链接</a></li>
 				<li><a href="${pageContext.request.contextPath}/news/s/" target="_blank" title="留言">留言</a></li>
@@ -54,18 +76,18 @@
 	</header>
 	<!--header end-->
 	<div id="mainbody">
-	<nav id="menubar">
-	    <s:iterator value="menu.subMenu" var="parent">
-	      <div class="dropdown">
-			  <a class="dropdown-toggle" href="?<s:property value="#parent.reqType"/>=<s:property value="#parent.reqData"/>" data-toggle="dropdown"><s:property value="#parent.name"/></a>
-			  <ul class="dropdown-menu" role="menu">
-			      <s:iterator value="#parent.subMenu" var="sub"> 
-			        <li><a tabindex="-1" href="?<s:property value="#sub.reqType"/>=<s:property value="#sub.reqData"/>"><s:property value="#sub.name"/></a></li>
-			      </s:iterator>
-			  </ul>
-		  </div>
-	    </s:iterator>
-		
+		<nav id="menubar">
+			<s:iterator value="menu.subMenu" var="parent">
+				<div class="dropdown">
+					<a class="dropdown-toggle" href="?<s:property value="#parent.reqType"/>=<s:property value="#parent.reqData"/>" data-toggle="dropdown"><s:property value="#parent.name" /></a>
+					<ul class="dropdown-menu" role="menu">
+						<s:iterator value="#parent.subMenu" var="sub">
+							<li><a tabindex="-1" href="?<s:property value="#sub.reqType"/>=<s:property value="#sub.reqData"/>"><s:property value="#sub.name" /></a></li>
+						</s:iterator>
+					</ul>
+				</div>
+			</s:iterator>
+		</nav>
 		<!-- <div class="dropdown">
 			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
 			<ul class="dropdown-menu" role="menu">
@@ -96,13 +118,24 @@
 				<li><a tabindex="-1" href="#">Separated link</a></li>
 			</ul>
 		</div> -->
-	</nav>
+
 		<div class="blogs">
-			<ul class="bloglist">
+			<ul class="bloglist" id="bloglist">
 				<li style="border-right: 0px;">
 					<div class="arrow_box currposition">
 						<span>当前的位置：</span> 
-						<a href="?"><s:property value="position.name" /></a>
+						<s:iterator value="positionList" var="pos">
+						   <s:if test="%{#pos.reqType != null}">
+						      <a href="?<s:property value="#pos.reqType"/>=<s:property value="#pos.reqData"/>"><s:property value="#pos.name" /></a>
+						   </s:if>
+						   <s:else>
+						       <a href=""><s:property value="#pos.name" /></a>
+						   </s:else>
+						   <s:if test="%{#pos.subPosition != null}">
+						       <span>></span>
+						   </s:if>
+						</s:iterator>
+					<%-- 	<a href="?"><s:property value="position.name" /></a>
 						<s:if test="%{position.subPosition != null}">
 						    <span>></span><a href="?<s:property value="position.subPosition.reqType"/>=<s:property value="position.subPosition.reqData"/>"><s:property value="position.subPosition.name" /></a>
 						    <s:if test="%{position.subPosition.subPosition != null}">
@@ -110,7 +143,7 @@
 						       <a href="?<s:property value="position.subPosition.subPosition.reqType"/>=<s:property value="position.subPosition.subPosition.reqData"/>">
 						       <s:property value="position.subPosition.subPosition.name" /></a>
 						    </s:if>
-						</s:if>
+						</s:if> --%>
 					</div>
 				</li>
 				<s:iterator value="modelList" var="art">
@@ -192,7 +225,8 @@
 		if (pageNum == 1) {
 			disableDiv($('#firstPage'));
 			disableDiv($('#prevPage'));
-		} else if (pageNum == pageTotal) {
+		} 
+		if (pageNum == pageTotal) {
 			disableDiv($('#lastPage'));
 			disableDiv($('#nextPage'));
 		} 

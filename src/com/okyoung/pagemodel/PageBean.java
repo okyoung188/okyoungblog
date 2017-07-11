@@ -1,5 +1,6 @@
 package com.okyoung.pagemodel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,9 @@ import java.util.List;
  */
 public class PageBean<T> {
 
-	List<T> modelList;
+
+	String reqType;
+	String reqData;
 	long pageTotal;
 	long pageNum;
 	long pageSize;
@@ -18,14 +21,12 @@ public class PageBean<T> {
 	 *当前请求所在位置，借用Menu类，实际另做一个Position类比较好
 	 */
 	Position position;
+	List<Position> positionList;
 	/**
 	 * Menu tree of this app
 	 */
 	Menu menu;
-	
-	
-	String reqType;
-	String reqData;
+	List<T> modelList;
 	
 	public List<T> getModelList() {
 		return modelList;
@@ -56,6 +57,16 @@ public class PageBean<T> {
 	}
 	public void setPosition(Position position) {
 		this.position = position;
+		Position pos = position;
+		List<Position> positionList = null;
+		while (pos != null){
+			if(positionList == null){
+				positionList = new ArrayList<Position>();
+			}
+			positionList.add(pos);
+			pos = pos.getSubPosition();
+		}
+		setPositionList(positionList);
 	}
 	public String getReqType() {
 		return reqType;
@@ -74,6 +85,12 @@ public class PageBean<T> {
 	}
 	public void setMenu(Menu menu) {
 		this.menu = menu;
+	}
+	public List<Position> getPositionList() {
+		return positionList;
+	}
+	public void setPositionList(List<Position> positionList) {
+		this.positionList = positionList;
 	}
 
 }
