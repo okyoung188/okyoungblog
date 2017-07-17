@@ -29,15 +29,29 @@
 	<constant name="struts.dispatcher.parametersWorkaround" value="false" />
 
 	<package name="basePackage" namespace="/" extends="json-default">
+		<action name="blog">
+			<result type="redirectAction">/blog/bloglist
+				<param name="namespace">/blog</param>
+				<param name="actionName">bloglist</param>
+			</result>
+		</action>
+		   
+	    <action name="aboutme">
+	        <result>/WEB-INF/jsp/aboutme.jsp</result>
+	    </action>
+	</package>
+
+	<package name="blogPackage" namespace="/blog" extends="json-default">
 	
 	    <global-results>
 	         <result name="error">/WEB-INF/jsp/error.jsp</result>	
 	         <result name="mainpage">/WEB-INF/jsp/main.jsp</result> 
-	    </global-results>
+	    </global-results>	    
 	    
 	    <action name="main">
 	        <result name="success">/WEB-INF/jsp/main.jsp</result>
 	    </action>
+	    
 	    <action name="bloglist" class="blogListAction">
 	         <result name="success">/WEB-INF/jsp/main.jsp</result>
 	    </action>

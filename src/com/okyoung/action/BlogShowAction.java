@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 
 import com.okyoung.pagemodel.ArticleModel;
 import com.okyoung.pagemodel.CritiqueModel;
+import com.okyoung.pagemodel.Menu;
+import com.okyoung.pagemodel.PageBean;
+import com.okyoung.pagemodel.Position;
 import com.okyoung.service.ArticleService;
 import com.okyoung.service.CritiqueService;
 import com.opensymphony.xwork2.ActionSupport;
@@ -26,6 +29,8 @@ public class BlogShowAction extends ActionSupport implements ModelDriven<Article
 
 	ArticleModel artModel =new ArticleModel();
 	List<CritiqueModel> critiqueList;
+	Menu menu;
+	List<Position> positionList;
 
 	@Override
 	public ArticleModel getModel() {
@@ -47,13 +52,36 @@ public class BlogShowAction extends ActionSupport implements ModelDriven<Article
 	public void setCritiqueList(List<CritiqueModel> critiqueList) {
 		this.critiqueList = critiqueList;
 	}
+	
+	public Menu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
+	
+	public List<Position> getPositionList() {
+		return positionList;
+	}
+
+	public void setPositionList(List<Position> positionList) {
+		this.positionList = positionList;
+	}
 
 	@Override
 	public String execute() throws Exception {
 		int id = artModel.getId();
 		if (id > 0) {
-			artModel = articleService.queryById(id);
-			critiqueList = critiqueService.queryByArtId(id);
+			PageBean<ArticleModel> pageBean = articleService.queryById(id);
+			if(pageBean != null){
+				if(pageBean.getModelList() != null){
+					artModel = pageBean.getModelList().get(0);
+				}				
+				critiqueList = critiqueService.queryByArtId(id);
+				menu = articleService.getMenu();
+				positionList = pageBean.getPositionList();
+			}		
 			return SUCCESS;
 		} else{
 			return ERROR;

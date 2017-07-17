@@ -1,6 +1,5 @@
 package com.okyoung.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -146,7 +145,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public ArticleModel queryById(int id) throws Exception {
+	public PageBean<ArticleModel> queryById(int id) throws Exception {
+		PageBean<ArticleModel> pageBean = new PageBean<ArticleModel>();
 		ArticleModel articleModel = null;
 		if (id > 0){
 			String hql = " from Article a where a.id=:id";
@@ -163,9 +163,14 @@ public class ArticleServiceImpl implements ArticleService {
 				articleModel.setCritiqueSize(critiqueSize);
 				articleModel.setArticleType(article.getArticleType().getTypeName());
 				articleModel.setCtgName(article.getArticleType().getCategory().getCtgName());
+				List<ArticleModel> articleModels = new ArrayList<ArticleModel>();
+				articleModels.add(articleModel);
+				pageBean.setModelList(articleModels);
+				Position position = getPosition(id);
+                pageBean.setPosition(position);
 			}
 		}
-		return articleModel;
+		return pageBean;
 	}
 
 	@Override
@@ -262,6 +267,32 @@ public class ArticleServiceImpl implements ArticleService {
 		System.out.println(rtPosition);
 		return rtPosition;
 	}
+
+	@Override
+	public Position getPosition(int id) throws Exception {
+		Position rtPosition = null;
+		if(id > 0){
+			String hql = "from Article a where a.id=:id";
+			Map<String,Object> paramMap = new HashMap<String,Object>();
+			paramMap.put("id", id);
+			Article article = baseDao.get(hql, paramMap);
+			if (article != null){
+				ArticleType artType = article.getArticleType();
+				rtPosition = getPosition(artType.getTypeName(),MenuUtil.ATYPE_REQTYPE);
+				if(rtPosition != null){
+					Position artPosition = new Position(MenuUtil.ARTICLE_POSITION,null,null);
+					Position tempPosition = rtPosition;
+					for (;tempPosition.getSubPosition() != null;tempPosition= tempPosition.getSubPosition()){
+					}
+					tempPosition.setSubPosition(artPosition);
+			    }
+			}
+		}
+		System.out.println(rtPosition);
+        return rtPosition;
+	}
+	
+
 
 	
 

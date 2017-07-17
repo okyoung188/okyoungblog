@@ -8,16 +8,7 @@
 <title>博客主页</title>
 <meta name="keywords" content="黑色模板,个人网站模板,个人博客模板,博客模板,css3,html5,网站模板" />
 <meta name="description" content="这是一个有关黑色时间轴的css3 html5 网站模板" />
-<link href="http://cdn.bootcss.com/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/css/animation.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/css/lrtk.css" rel="stylesheet" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/js.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/page.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jqPaginator.min.js"></script>
-<script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<%@ include file="linkscript.jsp"%>
 <style>
 .pageDiv{font:14px "微软雅黑", "Microsoft Yahei";text-align:center;height:40px;padding-top:10px;background-color:#D6D6D6}
 .pageDiv div{float:left;line-height:25px}
@@ -40,85 +31,21 @@
 <![endif]-->
 </head>
 <body>
-	<header>
-		<nav id="nav">
-			<ul>
-				<li><a href="${pageContext.request.contextPath}">网站首页</a></li>
-				<li><a href="${pageContext.request.contextPath}/main">主页</a></li>
-				<li>
-					<div class="dropdown">
-						<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> 博客文章 </a>
-						<ul class="dropdown-menu" role="menu">
-							<li>
-								<nav id="menubar">
-									<s:iterator value="menu.subMenu" var="parent">
-										<div class="dropdown">
-											<a class="dropdown-toggle" href="?<s:property value="#parent.reqType"/>=<s:property value="#parent.reqData"/>" data-toggle="dropdown"><s:property value="#parent.name" /></a>
-											<ul class="dropdown-menu" role="menu">
-												<s:iterator value="#parent.subMenu" var="sub">
-													<li><a tabindex="-1" href="?<s:property value="#sub.reqType"/>=<s:property value="#sub.reqData"/>"><s:property value="#sub.name" /></a></li>
-												</s:iterator>
-											</ul>
-										</div>
-									</s:iterator>
-								</nav>
-						   </li>
-						</ul>
-					</div>
-				</li>
-				<li><a href="${pageContext.request.contextPath}/book/" target="_blank" title="图书推荐">图书推荐</a></li>
-				<li><a href="${pageContext.request.contextPath}/newshtml5/" target="_blank" title="HTML5 / CSS3">站外链接</a></li>
-				<li><a href="${pageContext.request.contextPath}/news/s/" target="_blank" title="留言">留言</a></li>
-				<li><a href="${pageContext.request.contextPath}/web/" target="_blank" title="网站介绍">网站介绍</a></li>
-				<li><a href="${pageContext.request.contextPath}/aboutme" target="_blank" title="关于我">关于我</a></li>
-			</ul>
-		</nav>
-	</header>
+	<%@ include file="header.jsp"%>
 	<!--header end-->
 	<div id="mainbody">
 		<nav id="menubar">
 			<s:iterator value="menu.subMenu" var="parent">
 				<div class="dropdown">
-					<a class="dropdown-toggle" href="?<s:property value="#parent.reqType"/>=<s:property value="#parent.reqData"/>" data-toggle="dropdown"><s:property value="#parent.name" /></a>
+					<a class="dropdown-toggle" href="bloglist?<s:property value="#parent.reqType"/>=<s:property value="#parent.reqData"/>" data-toggle="dropdown"><s:property value="#parent.name" /></a>
 					<ul class="dropdown-menu" role="menu">
 						<s:iterator value="#parent.subMenu" var="sub">
-							<li><a tabindex="-1" href="?<s:property value="#sub.reqType"/>=<s:property value="#sub.reqData"/>"><s:property value="#sub.name" /></a></li>
+							<li><a tabindex="-1" href="bloglist?<s:property value="#sub.reqType"/>=<s:property value="#sub.reqData"/>"><s:property value="#sub.name" /></a></li>
 						</s:iterator>
 					</ul>
 				</div>
 			</s:iterator>
 		</nav>
-		<!-- <div class="dropdown">
-			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
-			<ul class="dropdown-menu" role="menu">
-				<li><a tabindex="-1" href="#">Action</a></li>
-				<li><a tabindex="-1" href="#">Another action</a></li>
-				<li><a tabindex="-1" href="#">Something else here</a></li>
-				<li class="divider"></li>
-				<li><a tabindex="-1" href="#">Separated link</a></li>
-			</ul>
-		</div>
-		<div class="dropdown">
-			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
-			<ul class="dropdown-menu" role="menu">
-				<li><a tabindex="-1" href="#">Action</a></li>
-				<li><a tabindex="-1" href="#">Another action</a></li>
-				<li><a tabindex="-1" href="#">Something else here</a></li>
-				<li class="divider"></li>
-				<li><a tabindex="-1" href="#">Separated link</a></li>
-			</ul>
-		</div>
-		<div class="dropdown">
-			<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"> Dropdown trigger </a>
-			<ul class="dropdown-menu" role="menu">
-				<li><a tabindex="-1" href="#">Action</a></li>
-				<li><a tabindex="-1" href="#">Another action</a></li>
-				<li><a tabindex="-1" href="#">Something else here</a></li>
-				<li class="divider"></li>
-				<li><a tabindex="-1" href="#">Separated link</a></li>
-			</ul>
-		</div> -->
-
 		<div class="blogs">
 			<ul class="bloglist" id="bloglist">
 				<li style="border-right: 0px;">
@@ -126,10 +53,10 @@
 						<span>当前的位置：</span> 
 						<s:iterator value="positionList" var="pos">
 						   <s:if test="%{#pos.reqType != null}">
-						      <a href="?<s:property value="#pos.reqType"/>=<s:property value="#pos.reqData"/>"><s:property value="#pos.name" /></a>
+						      <a href="bloglist?<s:property value="#pos.reqType"/>=<s:property value="#pos.reqData"/>"><s:property value="#pos.name" /></a>
 						   </s:if>
 						   <s:else>
-						       <a href=""><s:property value="#pos.name" /></a>
+						       <a href="bloglist"><s:property value="#pos.name" /></a>
 						   </s:else>
 						   <s:if test="%{#pos.subPosition != null}">
 						       <span>></span>
@@ -150,10 +77,10 @@
 					<li>
 						<div class="arrow_box">
 							<h2 class="title">
-								<a href="${pageContext.request.contextPath}/blogshow?id=<s:property value="#art.id"/>" target="_blank"><s:property value="#art.title"/></a>
+								<a href="blogshow?id=<s:property value="#art.id"/>" target="_blank"><s:property value="#art.title"/></a>
 							</h2>
 							<ul class="textinfo">
-								<a href="${pageContext.request.contextPath}/blogshow?id=<s:property value="#art.id"/>" target="_blank"><img src='<s:property value="#art.indeximg"/>'></a>
+								<a href="blogshow?id=<s:property value="#art.id"/>" target="_blank"><img src='<s:property value="#art.indeximg"/>'></a>
 								<p><s:property value="#art.content"/></p>
 							</ul>
 							<ul class="details">

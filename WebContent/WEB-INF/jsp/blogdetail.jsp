@@ -1,19 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="s"  uri="/struts-tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/css/animation.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/css/lrtk.css" rel="stylesheet" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/js.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/page.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jqPaginator.min.js"></script>
+<%@ include file="linkscript.jsp"%>
 <title>博客页</title>
 <style>
+#menubar{height:50px;width:95%;margin:auto;text-align:center;background:#fff}
+.dropdown{display:inline-block;border-right:1px solid #cac7c4;width:80px;padding:0 10px}
+.dropdown-toggle{line-height:50px}
+.caret{vertical-align:baseline}
+.dropdown:hover{background:#4fb8de}
+.dropdown:hover .dropdown-menu{display:block;margin:0px}
 .blogsection > div {margin:20px 0;}
 .articleComp{text-align:center;margin:20px auto}
 .blogshow{padding:25px}
@@ -27,35 +26,40 @@ form>div{margin:10px 35px}
 </style>
 </head>
 <body>
-	<header>
-		<nav id="nav">
-			<ul>
-				<li><a href="${pageContext.request.contextPath}">网站首页</a></li>
-				<li><a href="${pageContext.request.contextPath}/main">主页</a></li>
-				<li><a href="${pageContext.request.contextPath}/download/" target="_blank" title="博客文章">博客文章</a></li>
-				<li><a href="${pageContext.request.contextPath}/book/" target="_blank" title="图书推荐">图书推荐</a></li>
-				<li><a href="${pageContext.request.contextPath}/newshtml5/" target="_blank" title="HTML5 / CSS3">站外链接</a></li>
-				<li><a href="${pageContext.request.contextPath}/news/s/" target="_blank" title="留言">留言</a></li>
-				<li><a href="${pageContext.request.contextPath}/web/" target="_blank" title="网站介绍">网站介绍</a></li>
-				<li><a href="${pageContext.request.contextPath}/aboutme" target="_blank" title="关于我">关于我</a></li>
-			</ul>
-		</nav>
-	</header>
+	<%@ include file="header.jsp"%>
 	<!--header end-->
 	<div id="mainbody">
+	    <nav id="menubar">
+			<s:iterator value="menu.subMenu" var="parent">
+				<div class="dropdown">
+					<a class="dropdown-toggle" href="bloglist?<s:property value="#parent.reqType"/>=<s:property value="#parent.reqData"/>" data-toggle="dropdown"><s:property value="#parent.name" /></a>
+					<ul class="dropdown-menu" role="menu">
+						<s:iterator value="#parent.subMenu" var="sub">
+							<li><a tabindex="-1" href="bloglist?<s:property value="#sub.reqType"/>=<s:property value="#sub.reqData"/>"><s:property value="#sub.name" /></a></li>
+						</s:iterator>
+					</ul>
+				</div>
+			</s:iterator>
+		</nav>
 		<div class="blogsection">
-		    <div class="currposition">
+			<div class="currposition">
 				<span>当前的位置：</span> <a href="?"><s:property value="position.name" /></a>
-				<s:if test="%{position.subPosition != null}">
-					<span>></span>
-					<a href="?<s:property value="position.subPosition.reqType"/>=<s:property value="position.subPosition.reqData"/>"><s:property value="position.subPosition.name" /></a>
-					<s:if test="%{position.subPosition.subPosition != null}">
-						<span>></span>
-						<a href="?<s:property value="position.subPosition.subPosition.reqType"/>=<s:property value="position.subPosition.subPosition.reqData"/>"> <s:property value="position.subPosition.subPosition.name" /></a>
+				<s:iterator value="positionList" var="pos" status="status">
+					<s:if test="#status.last">
+						<a href="javascript:;" onclick="window.location.reload(true);"><s:property value="#pos.name" /></a>
 					</s:if>
-				</s:if>
+					<s:else>
+						<s:if test="%{#pos.reqType != null}">
+							<a href="bloglist?<s:property value="#pos.reqType"/><s:if test="%{#pos.reqData != null}">=<s:property value="#pos.reqData"/></s:if>"><s:property value="#pos.name" /></a>
+						</s:if>
+						<s:else>
+							<a href="bloglist"><s:property value="#pos.name" /></a>
+						</s:else>
+						<span>></span>
+					</s:else>
+				</s:iterator>
 			</div>
-	        <div class="blogshow" style="background:#fff">
+			<div class="blogshow" style="background:#fff">
 	           <h1 class="articleComp"><s:property value="artModel.title"/></h1>
 	           <p class="articleComp">
 	              <span>作者：<s:property value="artModel.editor"/></span> 
